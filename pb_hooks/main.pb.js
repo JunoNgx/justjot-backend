@@ -4,7 +4,7 @@
 onRecordAfterCreateRequest((e) => {
     const userId = e.record.getId();
     // const userRecord = $app.dao().findRecordById("users", userId);
-    // $mails.sendRecordVerification(userId, userRecord);
+    // $mails.sendRecordVerification($app, userRecord);
 
     // Create First Collection
     const itemCollectionsCollection = $app.dao().findCollectionByNameOrId("itemCollections");
