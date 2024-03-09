@@ -26,4 +26,8 @@ onRecordAfterCreateRequest((e) => {
     
 // }, "users");
     
-// TODO: fetch title and favicon for linksa
+// TODO: fetch title and favicon for links
+
+// TODO: process and assign type to new items
+
+// TDOO: check asterisk and dash prefix and create todo item
