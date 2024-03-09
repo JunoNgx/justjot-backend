@@ -76,11 +76,59 @@ onRecordAfterCreateRequest((e) => {
 
 // // Create starting data after a new user record is verified
 // onRecordAfterConfirmVerificationRequest((e) => {
-    
+
 // }, "users");
-    
+
 // TODO: fetch title and favicon for links
 
 // TODO: process and assign type to new items
 
 // TDOO: check asterisk and dash prefix and create todo item
+
+onModelAfterCreate((e) => {
+    const SHORT_NOTE_LEN = 50;
+    const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // validate OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // validate port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
+        '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
+
+    const itemRecordId = e.model.id;
+    const itemRecord = $app.dao().findFirstRecordByData("items", "id", itemRecordId);
+    const content = itemRecord.get("content");
+    const form = RecordUpsertForm($app, itemRecord);
+
+    // // Is todo list
+    // const firstChar = content.substring(0, 1);
+    // if (firstChar === "*" || firstChar === "-") {
+    //     // Use submitted content as title
+    //     form.loadData({
+    //         type: "todoList",
+    //         title: content,
+    //         content: ""
+    //     });
+    //     form.submit();
+    //     return;
+    // }
+
+    // Is link
+    const isValidUrl = urlPattern.test(content);
+    if (isValidUrl) {
+        // TODO: fetch title and favicon
+        form.loadData({
+            type: "link",
+        });
+        form.submit();
+        return;
+    }
+
+    // Is note
+    const formData = {
+        type: "text"
+    };
+    if (content.length <= SHORT_NOTE_LEN) formData.shouldCopyUponClick = true;
+    form.loadData(formData);
+    form.submit();
+
+}, "items")
