@@ -78,7 +78,7 @@ onRecordAfterCreateRequest((e) => {
 
 // }, "users");
 
-onModelAfterCreate((e) => {
+onModelAfterCreate(async (e) => {
     const SHORT_NOTE_LEN = 50;
     const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
@@ -108,9 +108,31 @@ onModelAfterCreate((e) => {
     // Is link
     const isValidUrl = urlPattern.test(content);
     if (isValidUrl) {
+        // fetch doesn't work in Goja :<
+        // const getTitle = async (url) => {  
+        //     return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
+        //         .then(response => {
+        //             $app.logger().info(response);
+        //             if (response.ok) return response.json()
+        //             $app.logger().error("Failed to fetch data from url", response);
+        //         })
+        //         .then(data => {
+        //             const doc = new DOMParser().parseFromString(data.contents, "text/html");
+        //             const title = doc.querySelectorAll('title')[0];
+        //             return title.innerText;
+        //         });
+        // };
+        
+        let title;
+        // try {
+        //     title = await getTitle(content);
+        // } catch (error) {
+        //     $app.logger().error("error fetching title", error);
+        // }
         // TODO: fetch title and favicon
         form.loadData({
             type: "link",
+            title
         });
         form.submit();
         return;
