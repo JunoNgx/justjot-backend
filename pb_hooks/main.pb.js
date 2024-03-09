@@ -6,3 +6,5 @@ onRecordAfterCreateRequest((e) => {
     const userRecord = $app.dao.findRecordById("users", userId);
     $mails.sendRecordVerification(userId, userRecord);
 }, "users");
+
+// TODO: fetch title and favicon for links
