@@ -1,8 +1,9 @@
 /// <reference path="../pb_data/types.d.ts" />
 
-// Send email verification after a new user record is created
 onRecordAfterCreateRequest((e) => {
     const userId = e.record.getId();
+
+    // // Send email verification after a new user record is created
     // const userRecord = $app.dao().findRecordById("users", userId);
     // $mails.sendRecordVerification($app, userRecord);
 
@@ -20,7 +21,6 @@ onRecordAfterCreateRequest((e) => {
     form.submit();
 
     // Create items
-
     // Retrieve the recently created Collection
     const firstCollection = $app.dao().findFirstRecordByData("itemCollections", "owner", userId);
     const firstCollectionId = firstCollection.getId();
