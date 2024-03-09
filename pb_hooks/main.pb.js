@@ -79,12 +79,6 @@ onRecordAfterCreateRequest((e) => {
 
 // }, "users");
 
-// TODO: fetch title and favicon for links
-
-// TODO: process and assign type to new items
-
-// TDOO: check asterisk and dash prefix and create todo item
-
 onModelAfterCreate((e) => {
     const SHORT_NOTE_LEN = 50;
     const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
