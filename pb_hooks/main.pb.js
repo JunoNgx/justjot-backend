@@ -17,7 +17,6 @@ onRecordAfterCreateRequest((e) => {
         slug: "first-collection",
         sortOrder: 0,
     });
-
     form.submit();
 
     // Create items
