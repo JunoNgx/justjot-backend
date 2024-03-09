@@ -3,7 +3,7 @@
 // Send email verification after a new user record is created
 onRecordAfterCreateRequest((e) => {
     const userId = e.record.getId();
-    // const userRecord = $app.dao.findRecordById("users", userId);
+    // const userRecord = $app.dao().findRecordById("users", userId);
     // $mails.sendRecordVerification(userId, userRecord);
 
     // Create First Collection
