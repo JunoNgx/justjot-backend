@@ -51,26 +51,26 @@ onRecordAfterCreateRequest((e) => {
     colourItemForm.submit();
 
     // Create short note
-    const shortNoteItemRecord = new Record(itemCollection);
-    const shortNoteItemForm = new RecordUpsertForm($app, shortNoteItemRecord);
-    shortNoteItemForm.loadData({
+    const shortTextItemRecord = new Record(itemCollection);
+    const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
+    shortTextItemForm.loadData({
         owner: userId,
         collection: firstCollectionId,
-        title: "Short note",
+        title: "Short text note",
         content: "Click here to copy",
     });
-    shortNoteItemForm.submit();
+    shortTextItemForm.submit();
 
     // Create long note
-    const longNoteItemRecord = new Record(itemCollection);
-    const longNoteItemForm = new RecordUpsertForm($app, longNoteItemRecord);
-    longNoteItemForm.loadData({
+    const longTextItemRecord = new Record(itemCollection);
+    const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
+    longTextItemForm.loadData({
         owner: userId,
         collection: firstCollectionId,
-        title: "Long note",
-        content: "Click here to open the editor. Notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
+        title: "Long text note",
+        content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
     });
-    longNoteItemForm.submit();
+    longTextItemForm.submit();
 
 }, "users");
 
