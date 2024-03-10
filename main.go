@@ -18,7 +18,7 @@ func main() {
 		return nil
 	})
 
-	app.OnRecordAfterCreateRequest("users").Add(funcs.SendVerificationEmail)
+	app.OnRecordAfterCreateRequest("users").Add(funcs.HandleNewUserRegistration)
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)

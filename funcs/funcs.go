@@ -6,6 +6,19 @@ import (
 	"github.com/pocketbase/pocketbase/mails"
 )
 
+func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
+	app := pocketbase.New()
+	errPrefix := "ERROR handle new registration: "
+
+	err := SendVerificationEmail(e)
+	if err != nil {
+		app.Logger().Info(errPrefix + "sending verification email")
+		return nil
+	}
+
+	return nil
+}
+
 func SendVerificationEmail(e *core.RecordCreateEvent) error {
 	app := pocketbase.New()
 	// userId := e.Record.GetId()
@@ -19,3 +32,7 @@ func SendVerificationEmail(e *core.RecordCreateEvent) error {
 
 	return nil
 }
+
+// func CreateNewDataForNewUser(e *core.RecordCreateEvent) error {
+
+// }
