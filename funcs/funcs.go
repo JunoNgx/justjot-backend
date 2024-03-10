@@ -4,6 +4,7 @@ import (
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/mails"
+	"github.com/pocketbase/pocketbase/models"
 )
 
 func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
@@ -13,6 +14,18 @@ func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 	err := SendVerificationEmail(e)
 	if err != nil {
 		app.Logger().Info(errPrefix + "sending verification email")
+		return nil
+	}
+
+	collection, err := CreateCollectionForNewUser(e)
+	if err != nil {
+		app.Logger().Info(errPrefix + "creating new collection")
+		return nil
+	}
+
+	err = CreateColourNoteForNewUser(e, collection)
+	if err != nil {
+		app.Logger().Info(errPrefix + "creating new collection")
 		return nil
 	}
 
@@ -33,6 +46,12 @@ func SendVerificationEmail(e *core.RecordCreateEvent) error {
 	return nil
 }
 
-// func CreateNewDataForNewUser(e *core.RecordCreateEvent) error {
+func CreateCollectionForNewUser(e *core.RecordCreateEvent) (*models.Record, error) {
+	// fmt.Println("CreateCollectionForNewUser")
+	return nil, nil
+}
 
-// }
+func CreateColourNoteForNewUser(e *core.RecordCreateEvent, collection *models.Record) error {
+	// fmt.Println("CreateColourNoteForNewUser")
+	return nil
+}
