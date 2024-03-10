@@ -1,6 +1,7 @@
 package main
 
 import (
+	"justjot-backend/funcs"
 	"log"
 	"os"
 
@@ -16,6 +17,8 @@ func main() {
 		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), false))
 		return nil
 	})
+
+	app.OnRecordAfterCreateRequest("users").Add(funcs.SendVerificationEmail)
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
