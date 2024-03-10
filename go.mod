@@ -1,4 +1,4 @@
-module myapp
+module justjot-backend
 
 go 1.22.1
 
