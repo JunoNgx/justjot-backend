@@ -8,13 +8,14 @@ import (
 
 func SendVerificationEmail(e *core.RecordCreateEvent) error {
 	app := pocketbase.New()
-	userId := e.Record.GetId()
-	userRecord, err := app.Dao().FindRecordById("users", userId)
-	if err != nil {
-		return err
-	}
+	// userId := e.Record.GetId()
+	// userRecord, err := app.Dao().FindRecordById("users", userId)
+	// if err != nil {
+	// 	return err
+	// }
 
-	mails.SendRecordVerification(app, userRecord)
+	// mails.SendRecordVerification(app, userRecord)
+	mails.SendRecordVerification(app, e.Record)
 
 	return nil
 }
