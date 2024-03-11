@@ -17,6 +17,8 @@
 # Go workspace file
 go.work
 
+build-errors.log
+
 pb_data
 pb_data/*
 pb_migrations
