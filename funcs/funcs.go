@@ -51,7 +51,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 		return nil
 	}
 
-	err = CreateShortNoteForNewUser(app, e.Record, collection)
+	err = CreateShortTextForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX_NEW_REGISTRATION+"creating short note",
@@ -163,7 +163,7 @@ func CreateColourNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.R
 	return nil
 }
 
-func CreateShortNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
+func CreateShortTextForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
 	userId := userRecord.GetId()
 	collectionId := collectionRecord.GetId()
 
