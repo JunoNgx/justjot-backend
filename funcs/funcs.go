@@ -267,6 +267,8 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 			"faviconUrl": faviconUrl,
 		})
 		form.Submit()
+
+		return nil
 	}
 
 	// Case: (default fallback) is note
