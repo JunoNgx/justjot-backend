@@ -1,10 +1,9 @@
 package funcs
 
 import (
-	"fmt"
-
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/forms"
 	"github.com/pocketbase/pocketbase/mails"
 	"github.com/pocketbase/pocketbase/models"
 )
@@ -61,29 +60,26 @@ func SendVerificationEmail(userRecord *models.Record) error {
 
 func CreateCollectionForNewUser(userRecord *models.Record, app *pocketbase.PocketBase) (*models.Record, error) {
 	userId := userRecord.GetId()
-	fmt.Println(userId)
 	collectionsCollection, err := app.Dao().FindCollectionByNameOrId("itemCollections")
-	fmt.Println(collectionsCollection)
 	if err != nil {
 		return nil, err
 	}
 
-	// firstCollection := models.NewRecord(collectionsCollection)
-	// form := forms.NewRecordUpsert(app, firstCollection)
-	// form.LoadData(map[string]any{
-	// 	"owner":     userId,
-	// 	"name":      "First Collection",
-	// 	"slug":      "first-collection",
-	// 	"sortOrder": 0,
-	// })
+	firstCollection := models.NewRecord(collectionsCollection)
+	form := forms.NewRecordUpsert(app, firstCollection)
+	form.LoadData(map[string]any{
+		"owner":     userId,
+		"name":      "First Collection",
+		"slug":      "first-collection",
+		"sortOrder": 0,
+	})
 
-	// err = form.Submit()
-	// if err != nil {
-	// 	return nil, err
-	// }
+	err = form.Submit()
+	if err != nil {
+		return nil, err
+	}
 
-	// return firstCollection, nil
-	return nil, nil
+	return firstCollection, nil
 }
 
 func CreateColourNoteForNewUser(e *core.RecordCreateEvent, collection *models.Record) error {
