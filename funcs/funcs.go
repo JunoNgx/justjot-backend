@@ -240,7 +240,15 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 		form.LoadData(map[string]any{
 			"type": "link",
 		})
-		form.Submit()
+		err = form.Submit()
+		if err != nil {
+			app.Logger().Error(
+				ERROR_PREFIX_NEW_ITEM+"link item, type",
+				"itemId", itemId,
+				"content", content,
+				"error", err,
+			)
+		}
 
 		TryFetchTitleAndFavicon(app, itemRecord, processedUrl)
 
@@ -252,7 +260,15 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 		"type":                "text",
 		"shouldCopyUponClick": len(content) <= SHORT_NOTE_MAX_LEN,
 	})
-	form.Submit()
+	err = form.Submit()
+	if err != nil {
+		app.Logger().Error(
+			ERROR_PREFIX_NEW_ITEM+"text item, type and shouldCopyUponClick",
+			"itemId", itemId,
+			"content", content,
+			"error", err,
+		)
+	}
 
 	return nil
 }
