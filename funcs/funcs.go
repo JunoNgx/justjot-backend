@@ -12,7 +12,7 @@ const ERROR_PREFIX string = "ERROR handle new registration: "
 func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 	app := pocketbase.New()
 
-	err := SendVerificationEmail(e)
+	err := SendVerificationEmail(e.Record)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX+"sending verification email",
@@ -45,7 +45,7 @@ func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 	return nil
 }
 
-func SendVerificationEmail(e *core.RecordCreateEvent) error {
+func SendVerificationEmail(userRecord *models.Record) error {
 	app := pocketbase.New()
 	// userId := e.Record.GetId()
 	// userRecord, err := app.Dao().FindRecordById("users", userId)
@@ -54,7 +54,7 @@ func SendVerificationEmail(e *core.RecordCreateEvent) error {
 	// }
 
 	// mails.SendRecordVerification(app, userRecord)
-	mails.SendRecordVerification(app, e.Record)
+	mails.SendRecordVerification(app, userRecord)
 
 	return nil
 }
