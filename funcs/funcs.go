@@ -2,7 +2,11 @@ package funcs
 
 import (
 	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/forms"
@@ -227,6 +231,43 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 
 	// Case: is link
 	// TODO
+	_, err = url.ParseRequestURI(content)
+	if err == nil {
+		// Confirm: is valid url
+		res, err := http.Get(content)
+		if err != nil {
+			return err
+		}
+		defer res.Body.Close()
+
+		if res.StatusCode != 200 {
+			app.Logger().Warn(
+				"Attempt to fetch url, did not get code 200",
+				"itemId", itemId,
+				"content", content,
+			)
+			return nil
+		}
+
+		doc, err := goquery.NewDocumentFromReader(res.Body)
+		if err != nil {
+			app.Logger().Warn(
+				"Attempt to fetch url, received content, but couldn't parse",
+				"itemId", itemId,
+				"content", content,
+			)
+			return nil
+		}
+
+		title := doc.Find("title").Text()
+		faviconUrl, _ := doc.Find("link[rel~=\"icon\"]").Attr("href")
+		fmt.Println("fetched", title, faviconUrl)
+		form.LoadData(map[string]any{
+			"title":      title,
+			"faviconUrl": faviconUrl,
+		})
+		form.Submit()
+	}
 
 	// Case: (default fallback) is note
 	form.LoadData(map[string]any{
