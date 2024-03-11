@@ -14,7 +14,7 @@ func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 
 	err := SendVerificationEmail(e)
 	if err != nil {
-		app.Logger().Info(
+		app.Logger().Error(
 			ERROR_PREFIX+"sending verification email",
 			"userId", e.Record.GetId(),
 			"error", err,
@@ -24,7 +24,7 @@ func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 
 	collection, err := CreateCollectionForNewUser(e)
 	if err != nil {
-		app.Logger().Info(
+		app.Logger().Error(
 			ERROR_PREFIX+"creating default collection",
 			"userId", e.Record.GetId(),
 			"error", err,
@@ -34,7 +34,7 @@ func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 
 	err = CreateColourNoteForNewUser(e, collection)
 	if err != nil {
-		app.Logger().Info(
+		app.Logger().Error(
 			ERROR_PREFIX+"creating colour note",
 			"userId", e.Record.GetId(),
 			"error", err,
