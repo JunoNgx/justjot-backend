@@ -310,7 +310,7 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 	err = form.Submit()
 	if err != nil {
 		app.Logger().Warn(
-			ERROR_PREFIX_NEW_ITEM+"link item",
+			ERROR_PREFIX_NEW_ITEM+"link item, title and favicon",
 			"itemId", itemId,
 			"processedUrl", processedUrl,
 			"title", title,
