@@ -61,7 +61,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 		return nil
 	}
 
-	err = CreateLongNoteForNewUser(app, e.Record, collection)
+	err = CreateLongTextForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX_NEW_REGISTRATION+"creating short note",
@@ -189,7 +189,7 @@ func CreateShortTextForNewUser(app *pocketbase.PocketBase, userRecord *models.Re
 	return nil
 }
 
-func CreateLongNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
+func CreateLongTextForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
 	userId := userRecord.GetId()
 	collectionId := collectionRecord.GetId()
 
@@ -204,7 +204,7 @@ func CreateLongNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Rec
 		"owner":      userId,
 		"collection": collectionId,
 		"title":      "Long text note",
-		"content":    "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard).",
+		"content":    "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually configure this note item from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard).",
 	})
 
 	err = form.Submit()
