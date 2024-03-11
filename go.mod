@@ -2,10 +2,14 @@ module justjot-backend
 
 go 1.22.1
 
-require github.com/pocketbase/pocketbase v0.22.3
+require (
+	github.com/PuerkitoBio/goquery v1.9.1
+	github.com/pocketbase/pocketbase v0.22.3
+)
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/aws/aws-sdk-go v1.50.32 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.25.2 // indirect
