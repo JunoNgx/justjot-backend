@@ -31,6 +31,16 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 		return nil
 	}
 
+	err = CreateLinkForNewUser(app, e.Record, collection)
+	if err != nil {
+		app.Logger().Error(
+			ERROR_PREFIX+"creating link",
+			"userId", e.Record.GetId(),
+			"error", err,
+		)
+		return nil
+	}
+
 	err = CreateColourNoteForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
@@ -81,6 +91,32 @@ func CreateCollectionForNewUser(app *pocketbase.PocketBase, userRecord *models.R
 	}
 
 	return firstCollection, nil
+}
+
+func CreateLinkForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
+	userId := userRecord.GetId()
+	collectionId := collectionRecord.GetId()
+
+	itemsCollection, err := app.Dao().FindCollectionByNameOrId("items")
+	if err != nil {
+		return err
+	}
+
+	item := models.NewRecord(itemsCollection)
+	form := forms.NewRecordUpsert(app, item)
+	form.LoadData(map[string]any{
+		"owner":      userId,
+		"collection": collectionId,
+		"content":    "https://www.mozilla.org/",
+		// title to be processed by `onModelAfterCreate` hook
+	})
+
+	err = form.Submit()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func CreateColourNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
