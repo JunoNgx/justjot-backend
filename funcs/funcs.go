@@ -31,7 +31,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 		return nil
 	}
 
-	err = CreateColourNoteForNewUser(e, collection)
+	err = CreateColourNoteForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX+"creating colour note",
@@ -83,7 +83,28 @@ func CreateCollectionForNewUser(app *pocketbase.PocketBase, userRecord *models.R
 	return firstCollection, nil
 }
 
-func CreateColourNoteForNewUser(e *core.RecordCreateEvent, collection *models.Record) error {
-	// fmt.Println("CreateColourNoteForNewUser")
+func CreateColourNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
+	userId := userRecord.GetId()
+	collectionId := collectionRecord.GetId()
+
+	itemsCollection, err := app.Dao().FindCollectionByNameOrId("items")
+	if err != nil {
+		return err
+	}
+
+	item := models.NewRecord(itemsCollection)
+	form := forms.NewRecordUpsert(app, item)
+	form.LoadData(map[string]any{
+		"owner":      userId,
+		"collection": collectionId,
+		"title":      "Medium Aquamarine",
+		"content":    "#66CDAA",
+	})
+
+	err = form.Submit()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
