@@ -15,7 +15,7 @@ import (
 	"github.com/pocketbase/pocketbase/models"
 )
 
-const ERROR_PREFIX string = "ERROR handle new registration: "
+const ERROR_PREFIX_NEW_REGISTRATION string = "[ERROR: handle new registration] "
 
 func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateEvent) error {
 	SendVerificationEmail(app, e.Record)
@@ -23,7 +23,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	collection, err := CreateCollectionForNewUser(app, e.Record)
 	if err != nil {
 		app.Logger().Error(
-			ERROR_PREFIX+"creating default collection",
+			ERROR_PREFIX_NEW_REGISTRATION+"creating default collection",
 			"userId", e.Record.GetId(),
 			"error", err,
 		)
@@ -33,7 +33,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	err = CreateLinkForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
-			ERROR_PREFIX+"creating link",
+			ERROR_PREFIX_NEW_REGISTRATION+"creating link",
 			"userId", e.Record.GetId(),
 			"error", err,
 		)
@@ -43,7 +43,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	err = CreateColourNoteForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
-			ERROR_PREFIX+"creating colour note",
+			ERROR_PREFIX_NEW_REGISTRATION+"creating colour note",
 			"userId", e.Record.GetId(),
 			"error", err,
 		)
@@ -53,7 +53,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	err = CreateShortNoteForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
-			ERROR_PREFIX+"creating short note",
+			ERROR_PREFIX_NEW_REGISTRATION+"creating short note",
 			"userId", e.Record.GetId(),
 			"error", err,
 		)
@@ -63,7 +63,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	err = CreateLongNoteForNewUser(app, e.Record, collection)
 	if err != nil {
 		app.Logger().Error(
-			ERROR_PREFIX+"creating short note",
+			ERROR_PREFIX_NEW_REGISTRATION+"creating short note",
 			"userId", e.Record.GetId(),
 			"error", err,
 		)
@@ -309,7 +309,7 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 	err = form.Submit()
 	if err != nil {
 		app.Logger().Warn(
-			"Error updating the link item",
+			"[Item auto hand] the link item",
 			"itemId", itemId,
 			"processedUrl", processedUrl,
 			"title", title,
