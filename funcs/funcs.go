@@ -22,7 +22,7 @@ func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 		return nil
 	}
 
-	collection, err := CreateCollectionForNewUser(e)
+	collection, err := CreateCollectionForNewUser(e.Record)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX+"creating default collection",
@@ -59,8 +59,30 @@ func SendVerificationEmail(userRecord *models.Record) error {
 	return nil
 }
 
-func CreateCollectionForNewUser(e *core.RecordCreateEvent) (*models.Record, error) {
-	// fmt.Println("CreateCollectionForNewUser")
+func CreateCollectionForNewUser(userRecord *models.Record) (*models.Record, error) {
+	app := pocketbase.New()
+	userId := userRecord.GetId()
+
+	// collectionsCollection, err := app.Dao().FindCollectionByNameOrId("itemCollections")
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// firstCollection := models.NewRecord(collectionsCollection)
+	// form := forms.NewRecordUpsert(app, firstCollection)
+	// form.LoadData(map[string]any{
+	// 	"owner":     userId,
+	// 	"name":      "First Collection",
+	// 	"slug":      "first-collection",
+	// 	"sortOrder": 0,
+	// })
+
+	// err = form.Submit()
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// return firstCollection, nil
 	return nil, nil
 }
 
