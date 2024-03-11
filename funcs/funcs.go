@@ -293,9 +293,12 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 	}
 
 	title := doc.Find("title").Text()
-	faviconUrl, _ := doc.Find("link[rel~=\"icon\"]").Attr("href")
+	faviconUrl, doesFaviconEexist := doc.Find("link[rel~=\"icon\"]").Attr("href")
 
-	// TODO: process favicon
+	if doesFaviconEexist {
+		faviconUrl = TryFixFaviconPath(faviconUrl, processedUrl)
+	}
+
 	fmt.Println("fetched", title, faviconUrl)
 
 	form := forms.NewRecordUpsert(app, itemRecord)
@@ -306,4 +309,25 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 	form.Submit()
 
 	return nil
+}
+
+func TryFixFaviconPath(faviconUrl string, pageUrl string) string {
+	parsedFaviconUrl, err := url.ParseRequestURI(faviconUrl)
+	if err == nil {
+		// Relative path like `/favicon.ico` will pass
+		// Try adding the protocol and hostname
+		parsedPageUrl, _ := url.ParseRequestURI(pageUrl)
+
+		if parsedFaviconUrl.Host == "" {
+			faviconUrl = parsedPageUrl.Host + faviconUrl
+		}
+
+		if parsedFaviconUrl.Scheme == "" {
+			faviconUrl = "https://" + faviconUrl
+		}
+
+		return faviconUrl
+	}
+
+	return ""
 }
