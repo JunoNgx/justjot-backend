@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/pocketbase/pocketbase"
@@ -230,8 +231,9 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 	form := forms.NewRecordUpsert(app, itemRecord)
 
 	// Case: is link
-	// TODO
-	_, err = url.ParseRequestURI(content)
+	// Handle url without protocol, e.g. `mozilla.org`
+	processedUrl := tryAddProtocolToUrl(content)
+	_, err = url.ParseRequestURI(processedUrl)
 	if err == nil {
 		// Confirm: is valid url
 
@@ -241,7 +243,7 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 		form.Submit()
 
 		// Attempts to get title and favicon
-		res, err := http.Get(content)
+		res, err := http.Get(processedUrl)
 		if err != nil {
 			return err
 		}
@@ -286,4 +288,12 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 	form.Submit()
 
 	return nil
+}
+
+func tryAddProtocolToUrl(url string) string {
+	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
+		return "https://" + url
+	}
+
+	return url
 }
