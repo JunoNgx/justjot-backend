@@ -1,6 +1,8 @@
 package funcs
 
 import (
+	"fmt"
+
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/mails"
@@ -9,20 +11,18 @@ import (
 
 const ERROR_PREFIX string = "ERROR handle new registration: "
 
-func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
-	app := pocketbase.New()
+func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateEvent) error {
+	// err := SendVerificationEmail(e.Record)
+	// if err != nil {
+	// 	app.Logger().Error(
+	// 		ERROR_PREFIX+"sending verification email",
+	// 		"userId", e.Record.GetId(),
+	// 		"error", err,
+	// 	)
+	// 	return nil
+	// }
 
-	err := SendVerificationEmail(e.Record)
-	if err != nil {
-		app.Logger().Error(
-			ERROR_PREFIX+"sending verification email",
-			"userId", e.Record.GetId(),
-			"error", err,
-		)
-		return nil
-	}
-
-	collection, err := CreateCollectionForNewUser(e.Record)
+	collection, err := CreateCollectionForNewUser(e.Record, app)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX+"creating default collection",
@@ -59,14 +59,14 @@ func SendVerificationEmail(userRecord *models.Record) error {
 	return nil
 }
 
-func CreateCollectionForNewUser(userRecord *models.Record) (*models.Record, error) {
-	app := pocketbase.New()
+func CreateCollectionForNewUser(userRecord *models.Record, app *pocketbase.PocketBase) (*models.Record, error) {
 	userId := userRecord.GetId()
-
-	// collectionsCollection, err := app.Dao().FindCollectionByNameOrId("itemCollections")
-	// if err != nil {
-	// 	return nil, err
-	// }
+	fmt.Println(userId)
+	collectionsCollection, err := app.Dao().FindCollectionByNameOrId("itemCollections")
+	fmt.Println(collectionsCollection)
+	if err != nil {
+		return nil, err
+	}
 
 	// firstCollection := models.NewRecord(collectionsCollection)
 	// form := forms.NewRecordUpsert(app, firstCollection)
