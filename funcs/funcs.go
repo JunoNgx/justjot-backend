@@ -7,25 +7,26 @@ import (
 	"github.com/pocketbase/pocketbase/models"
 )
 
+const ERROR_PREFIX string = "ERROR handle new registration: "
+
 func HandleNewUserRegistration(e *core.RecordCreateEvent) error {
 	app := pocketbase.New()
-	errPrefix := "ERROR handle new registration: "
 
 	err := SendVerificationEmail(e)
 	if err != nil {
-		app.Logger().Info(errPrefix + "sending verification email")
+		app.Logger().Info(ERROR_PREFIX + "sending verification email")
 		return nil
 	}
 
 	collection, err := CreateCollectionForNewUser(e)
 	if err != nil {
-		app.Logger().Info(errPrefix + "creating new collection")
+		app.Logger().Info(ERROR_PREFIX + "creating new collection")
 		return nil
 	}
 
 	err = CreateColourNoteForNewUser(e, collection)
 	if err != nil {
-		app.Logger().Info(errPrefix + "creating new collection")
+		app.Logger().Info(ERROR_PREFIX + "creating new collection")
 		return nil
 	}
 
