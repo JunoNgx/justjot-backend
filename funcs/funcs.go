@@ -236,46 +236,15 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 	_, err = url.ParseRequestURI(processedUrl)
 	if err == nil {
 		// Confirm: is valid url
-
 		form.LoadData(map[string]any{
 			"type": "link",
 		})
 		form.Submit()
 
-		// Attempts to get title and favicon
-		res, err := http.Get(processedUrl)
+		err = tryFetchTitleAndFavicon(app, itemRecord, processedUrl)
 		if err != nil {
 			return err
 		}
-		defer res.Body.Close()
-
-		if res.StatusCode != http.StatusOK {
-			app.Logger().Warn(
-				"Attempt to fetch url, did not get code 200",
-				"itemId", itemId,
-				"content", content,
-			)
-			return nil
-		}
-
-		doc, err := goquery.NewDocumentFromReader(res.Body)
-		if err != nil {
-			app.Logger().Warn(
-				"Attempt to fetch url, received content, but couldn't parse",
-				"itemId", itemId,
-				"content", content,
-			)
-			return nil
-		}
-
-		title := doc.Find("title").Text()
-		faviconUrl, _ := doc.Find("link[rel~=\"icon\"]").Attr("href")
-		fmt.Println("fetched", title, faviconUrl)
-		form.LoadData(map[string]any{
-			"title":      title,
-			"faviconUrl": faviconUrl,
-		})
-		form.Submit()
 
 		return nil
 	}
@@ -296,4 +265,48 @@ func tryAddProtocolToUrl(url string) string {
 	}
 
 	return url
+}
+
+func tryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Record, processedUrl string) error {
+	itemId := itemRecord.GetId()
+
+	res, err := http.Get(processedUrl)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		app.Logger().Warn(
+			"Attempt to fetch url, did not get code 200",
+			"itemId", itemId,
+			"processedUrl", processedUrl,
+		)
+		return err
+	}
+
+	doc, err := goquery.NewDocumentFromReader(res.Body)
+	if err != nil {
+		app.Logger().Warn(
+			"Attempt to fetch url, received content, but couldn't parse",
+			"itemId", itemId,
+			"processedUrl", processedUrl,
+		)
+		return err
+	}
+
+	title := doc.Find("title").Text()
+	faviconUrl, _ := doc.Find("link[rel~=\"icon\"]").Attr("href")
+
+	// TODO: process favicon
+	fmt.Println("fetched", title, faviconUrl)
+
+	form := forms.NewRecordUpsert(app, itemRecord)
+	form.LoadData(map[string]any{
+		"title":      title,
+		"faviconUrl": faviconUrl,
+	})
+	form.Submit()
+
+	return nil
 }
