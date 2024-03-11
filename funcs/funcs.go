@@ -51,6 +51,26 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 		return nil
 	}
 
+	err = CreateShortNoteForNewUser(app, e.Record, collection)
+	if err != nil {
+		app.Logger().Error(
+			ERROR_PREFIX+"creating short note",
+			"userId", e.Record.GetId(),
+			"error", err,
+		)
+		return nil
+	}
+
+	err = CreateLongNoteForNewUser(app, e.Record, collection)
+	if err != nil {
+		app.Logger().Error(
+			ERROR_PREFIX+"creating short note",
+			"userId", e.Record.GetId(),
+			"error", err,
+		)
+		return nil
+	}
+
 	return nil
 }
 
@@ -135,6 +155,58 @@ func CreateColourNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.R
 		"collection": collectionId,
 		"title":      "Medium Aquamarine",
 		"content":    "#66CDAA",
+	})
+
+	err = form.Submit()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func CreateShortNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
+	userId := userRecord.GetId()
+	collectionId := collectionRecord.GetId()
+
+	itemsCollection, err := app.Dao().FindCollectionByNameOrId("items")
+	if err != nil {
+		return err
+	}
+
+	item := models.NewRecord(itemsCollection)
+	form := forms.NewRecordUpsert(app, item)
+	form.LoadData(map[string]any{
+		"owner":      userId,
+		"collection": collectionId,
+		"title":      "Short text note",
+		"content":    "Click here to copy",
+	})
+
+	err = form.Submit()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func CreateLongNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Record, collectionRecord *models.Record) error {
+	userId := userRecord.GetId()
+	collectionId := collectionRecord.GetId()
+
+	itemsCollection, err := app.Dao().FindCollectionByNameOrId("items")
+	if err != nil {
+		return err
+	}
+
+	item := models.NewRecord(itemsCollection)
+	form := forms.NewRecordUpsert(app, item)
+	form.LoadData(map[string]any{
+		"owner":      userId,
+		"collection": collectionId,
+		"title":      "Long text note",
+		"content":    "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard).",
 	})
 
 	err = form.Submit()
