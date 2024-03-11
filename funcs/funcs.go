@@ -11,15 +11,7 @@ import (
 const ERROR_PREFIX string = "ERROR handle new registration: "
 
 func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateEvent) error {
-	// err := SendVerificationEmail(e.Record)
-	// if err != nil {
-	// 	app.Logger().Error(
-	// 		ERROR_PREFIX+"sending verification email",
-	// 		"userId", e.Record.GetId(),
-	// 		"error", err,
-	// 	)
-	// 	return nil
-	// }
+	SendVerificationEmail(app, e.Record)
 
 	collection, err := CreateCollectionForNewUser(app, e.Record)
 	if err != nil {
@@ -74,8 +66,8 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	return nil
 }
 
-func SendVerificationEmail(userRecord *models.Record) error {
-	app := pocketbase.New()
+func SendVerificationEmail(app *pocketbase.PocketBase, userRecord *models.Record) {
+	// app := pocketbase.New()
 	// userId := e.Record.GetId()
 	// userRecord, err := app.Dao().FindRecordById("users", userId)
 	// if err != nil {
@@ -84,8 +76,6 @@ func SendVerificationEmail(userRecord *models.Record) error {
 
 	// mails.SendRecordVerification(app, userRecord)
 	mails.SendRecordVerification(app, userRecord)
-
-	return nil
 }
 
 func CreateCollectionForNewUser(app *pocketbase.PocketBase, userRecord *models.Record) (*models.Record, error) {
