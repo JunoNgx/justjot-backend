@@ -18,7 +18,6 @@ func main() {
 		return nil
 	})
 
-	// app.OnRecordAfterCreateRequest("users").Add(funcs.HandleNewUserRegistration)
 	app.OnRecordAfterCreateRequest("users").Add(func(e *core.RecordCreateEvent) error {
 		err := funcs.HandleNewUserRegistration(app, e)
 		if err != nil {
