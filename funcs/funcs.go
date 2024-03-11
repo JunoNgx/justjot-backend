@@ -60,6 +60,7 @@ func SendVerificationEmail(userRecord *models.Record) error {
 
 func CreateCollectionForNewUser(app *pocketbase.PocketBase, userRecord *models.Record) (*models.Record, error) {
 	userId := userRecord.GetId()
+
 	collectionsCollection, err := app.Dao().FindCollectionByNameOrId("itemCollections")
 	if err != nil {
 		return nil, err
