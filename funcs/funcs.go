@@ -16,6 +16,7 @@ import (
 )
 
 const ERROR_PREFIX_NEW_REGISTRATION string = "[ERROR: handle new registration] "
+const ERROR_PREFIX_NEW_ITEM string = "[ERROR: handle new item] "
 
 func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateEvent) error {
 	SendVerificationEmail(app, e.Record)
