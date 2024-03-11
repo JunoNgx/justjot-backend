@@ -21,7 +21,7 @@ func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateE
 	// 	return nil
 	// }
 
-	collection, err := CreateCollectionForNewUser(e.Record, app)
+	collection, err := CreateCollectionForNewUser(app, e.Record)
 	if err != nil {
 		app.Logger().Error(
 			ERROR_PREFIX+"creating default collection",
@@ -58,7 +58,7 @@ func SendVerificationEmail(userRecord *models.Record) error {
 	return nil
 }
 
-func CreateCollectionForNewUser(userRecord *models.Record, app *pocketbase.PocketBase) (*models.Record, error) {
+func CreateCollectionForNewUser(app *pocketbase.PocketBase, userRecord *models.Record) (*models.Record, error) {
 	userId := userRecord.GetId()
 	collectionsCollection, err := app.Dao().FindCollectionByNameOrId("itemCollections")
 	if err != nil {
