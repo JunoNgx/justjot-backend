@@ -31,6 +31,19 @@ func main() {
 		return nil
 	})
 
+	app.OnModelAfterCreate("items").Add(func(e *core.ModelEvent) error {
+		err := funcs.HandleNewItemCreated(app, e)
+		if err != nil {
+			app.Logger().Error(
+				"Error handling OnModelAfterCreate",
+				"error", err,
+			)
+			return err
+		}
+
+		return nil
+	})
+
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
 	}

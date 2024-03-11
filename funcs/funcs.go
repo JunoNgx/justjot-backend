@@ -1,6 +1,8 @@
 package funcs
 
 import (
+	"errors"
+
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/forms"
@@ -203,6 +205,35 @@ func CreateLongNoteForNewUser(app *pocketbase.PocketBase, userRecord *models.Rec
 	if err != nil {
 		return err
 	}
+
+	return nil
+}
+
+const SHORT_NOTE_MAX_LEN = 50
+
+func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error {
+
+	itemId := e.Model.GetId()
+	itemRecord, err := app.Dao().FindFirstRecordByData("items", "id", itemId)
+	if err != nil {
+		return err
+	}
+
+	content, ok := itemRecord.Get("content").(string)
+	if !ok {
+		return errors.New("record item doesn't have string content")
+	}
+	form := forms.NewRecordUpsert(app, itemRecord)
+
+	// Case: is link
+	// TODO
+
+	// Case: (default fallback) is note
+	form.LoadData(map[string]any{
+		"type":                "text",
+		"shouldCopyUponClick": len(content) <= SHORT_NOTE_MAX_LEN,
+	})
+	form.Submit()
 
 	return nil
 }
