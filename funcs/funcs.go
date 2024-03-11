@@ -241,10 +241,7 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 		})
 		form.Submit()
 
-		err = tryFetchTitleAndFavicon(app, itemRecord, processedUrl)
-		if err != nil {
-			return err
-		}
+		tryFetchTitleAndFavicon(app, itemRecord, processedUrl)
 
 		return nil
 	}
