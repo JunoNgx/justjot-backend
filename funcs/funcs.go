@@ -232,7 +232,7 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 
 	// Case: is link
 	// Handle url without protocol, e.g. `mozilla.org`
-	processedUrl := tryAddProtocolToUrl(content)
+	processedUrl := TryAddProtocolToUrl(content)
 	_, err = url.ParseRequestURI(processedUrl)
 	if err == nil {
 		// Confirm: is valid url
@@ -241,7 +241,7 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 		})
 		form.Submit()
 
-		tryFetchTitleAndFavicon(app, itemRecord, processedUrl)
+		TryFetchTitleAndFavicon(app, itemRecord, processedUrl)
 
 		return nil
 	}
@@ -256,7 +256,7 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 	return nil
 }
 
-func tryAddProtocolToUrl(url string) string {
+func TryAddProtocolToUrl(url string) string {
 	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
 		return "https://" + url
 	}
@@ -264,7 +264,7 @@ func tryAddProtocolToUrl(url string) string {
 	return url
 }
 
-func tryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Record, processedUrl string) error {
+func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Record, processedUrl string) error {
 	itemId := itemRecord.GetId()
 
 	res, err := http.Get(processedUrl)
