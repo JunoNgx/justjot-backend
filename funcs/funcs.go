@@ -234,6 +234,13 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 	_, err = url.ParseRequestURI(content)
 	if err == nil {
 		// Confirm: is valid url
+
+		form.LoadData(map[string]any{
+			"type": "link",
+		})
+		form.Submit()
+
+		// Attempts to get title and favicon
 		res, err := http.Get(content)
 		if err != nil {
 			return err
