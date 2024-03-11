@@ -306,7 +306,17 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 		"title":      title,
 		"faviconUrl": faviconUrl,
 	})
-	form.Submit()
+	err = form.Submit()
+	if err != nil {
+		app.Logger().Warn(
+			"Error updating the link item",
+			"itemId", itemId,
+			"processedUrl", processedUrl,
+			"title", title,
+			"faviconUrl", faviconUrl,
+			"error", err,
+		)
+	}
 
 	return nil
 }
