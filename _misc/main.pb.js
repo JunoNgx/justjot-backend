@@ -1,11 +1,13 @@
 /// <reference path="../pb_data/types.d.ts" />
 
+// Old version using JS Hooks, storing for reference purpose.
+
 onRecordAfterCreateRequest((e) => {
     const userId = e.record.getId();
 
-    // // Send email verification after a new user record is created
-    // const userRecord = $app.dao().findRecordById("users", userId);
-    // $mails.sendRecordVerification($app, userRecord);
+    // Send email verification after a new user record is created
+    const userRecord = $app.dao().findRecordById("users", userId);
+    $mails.sendRecordVerification($app, userRecord);
 
     // Create First Collection
     const itemCollectionsCollection = $app.dao().findCollectionByNameOrId("itemCollections");
