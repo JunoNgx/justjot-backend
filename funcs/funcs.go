@@ -292,7 +292,7 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 		return err
 	}
 
-	title := doc.Find("title").Text()
+	title := doc.Find("title").First().Text()
 	faviconUrl, doesFaviconEexist := doc.Find("link[rel~=\"icon\"]").Attr("href")
 
 	if doesFaviconEexist {
