@@ -250,7 +250,7 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 			)
 		}
 
-		TryFetchTitleAndFavicon(app, itemRecord, processedUrl)
+		go TryFetchTitleAndFavicon(app, itemRecord, processedUrl)
 
 		return nil
 	}
