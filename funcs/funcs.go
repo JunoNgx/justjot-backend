@@ -257,13 +257,13 @@ func HandleNewItemCreated(app *pocketbase.PocketBase, e *core.ModelEvent) error 
 
 	// Case: (default fallback) is note
 	form.LoadData(map[string]any{
-		"type":                "text",
-		"shouldCopyUponClick": len(content) <= SHORT_NOTE_MAX_LEN,
+		"type":              "text",
+		"shouldCopyOnClick": len(content) <= SHORT_NOTE_MAX_LEN,
 	})
 	err = form.Submit()
 	if err != nil {
 		app.Logger().Error(
-			ERROR_PREFIX_NEW_ITEM+"text item, type and shouldCopyUponClick",
+			ERROR_PREFIX_NEW_ITEM+"text item, type and shouldCopyOnClick",
 			"itemId", itemId,
 			"content", content,
 			"error", err,
