@@ -17,6 +17,7 @@ import (
 
 const ERROR_PREFIX_NEW_REGISTRATION string = "[ERROR: handle new registration] "
 const ERROR_PREFIX_NEW_ITEM string = "[ERROR: handle new item] "
+const TITLE_MAX_LEN int = 200
 
 func HandleNewUserRegistration(app *pocketbase.PocketBase, e *core.RecordCreateEvent) error {
 	SendVerificationEmail(app, e.Record)
@@ -320,7 +321,7 @@ func TryFetchTitleAndFavicon(app *pocketbase.PocketBase, itemRecord *models.Reco
 
 	form := forms.NewRecordUpsert(app, itemRecord)
 	form.LoadData(map[string]any{
-		"title":      title,
+		"title":      substr(title, 0, TITLE_MAX_LEN),
 		"faviconUrl": faviconUrl,
 	})
 	err = form.Submit()
