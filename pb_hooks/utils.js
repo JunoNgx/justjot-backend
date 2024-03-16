@@ -156,18 +156,14 @@ const utils = {
     },
 
     setItemAsText(itemRecord) {
-        console.log("set item as text")
         const SHORT_NOTE_LEN = 50;
 
         const form = RecordUpsertForm($app, itemRecord);
         const formData = {
             type: types.ItemTypes.TEXT
         };
-        // console.log(JSON.stringify(formData))
-
-        // if (content.length <= SHORT_NOTE_LEN)
-        //     formData.shouldCopyOnClick = true;
-        // console.log(JSON.stringify(formData))
+        if (itemRecord.get("content").length <= SHORT_NOTE_LEN)
+            formData.shouldCopyOnClick = true;
 
         form.loadData(formData);
         form.submit();
