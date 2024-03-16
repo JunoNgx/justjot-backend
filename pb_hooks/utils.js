@@ -1,4 +1,5 @@
 const types = require(`${__hooks}/types.js`);
+const consts = require(`${__hooks}/consts.js`);
 
 const utils = {
     sendUserEmailVerification(e) {
@@ -162,7 +163,7 @@ const utils = {
         const formData = {
             type: types.ItemTypes.TEXT
         };
-        if (itemRecord.get("content").length <= SHORT_NOTE_LEN)
+        if (itemRecord.get("content").length <= consts.SHORT_NOTE_LEN)
             formData.shouldCopyOnClick = true;
 
         form.loadData(formData);
