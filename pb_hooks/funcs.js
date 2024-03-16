@@ -1,3 +1,5 @@
+/// <reference path="../pb_data/types.d.ts" />
+
 const types = require(`${__hooks}/types.js`);
 const consts = require(`${__hooks}/consts.js`);
 const utils = require(`${__hooks}/utils.js`);
