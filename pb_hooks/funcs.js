@@ -45,51 +45,83 @@ const funcs = {
     },
 
     createLinkForNewUser(userId, collectionId, itemsCollection) {
-        const linkItemRecord = new Record(itemsCollection);
-        const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
-        linkItemForm.loadData({
-            owner: userId,
-            collection: collectionId,
-            content: "https://www.mozilla.org/",
-            // title to be processed by `onRecordAfterCreateHook`
-        });
-        linkItemForm.submit();
+        try {
+            const linkItemRecord = new Record(itemsCollection);
+            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
+            linkItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                content: "https://www.mozilla.org/",
+                // title to be processed by `onRecordAfterCreateHook`
+            });
+            linkItemForm.submit();
+        } catch(err) {
+            app.Logger().Error(
+                ERROR_NEW_USER+"create link",
+                "userId", userId,
+                "error", err,
+            )
+        }
     },
 
     createColourNoteForNewUser(userId, collectionId, itemsCollection) {
-        const colourItemRecord = new Record(itemsCollection);
-        const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
-        colourItemForm.loadData({
-            owner: userId,
-            collection: collectionId,
-            title: "Medium Aquamarine",
-            content: "#66CDAA",
-        });
-        colourItemForm.submit();
+        try {
+            const colourItemRecord = new Record(itemsCollection);
+            const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
+            colourItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                title: "Medium Aquamarine",
+                content: "#66CDAA",
+            });
+            colourItemForm.submit();
+        } catch(err) {
+            app.Logger().Error(
+                ERROR_NEW_USER+"create colour note",
+                "userId", userId,
+                "error", err,
+            )
+        }
     },
 
     createShortTextForNewUser(userId, collectionId, itemsCollection) {
-        const shortTextItemRecord = new Record(itemsCollection);
-        const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
-        shortTextItemForm.loadData({
-            owner: userId,
-            collection: collectionId,
-            title: "Short text note",
-            content: "Click here to copy",
-        });
-        shortTextItemForm.submit();
+        try {
+            const shortTextItemRecord = new Record(itemsCollection);
+            const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
+            shortTextItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                title: "Short text note",
+                content: "Click here to copy",
+            });
+            shortTextItemForm.submit();
+        } catch(err) {
+            app.Logger().Error(
+                ERROR_NEW_USER+"create short text",
+                "userId", userId,
+                "error", err,
+            )
+        }
     },
 
     createLongTextForNewUser(userId, collectionId, itemsCollection) {
-        const longTextItemRecord = new Record(itemsCollection);
-        const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
-        longTextItemForm.loadData({
-            owner: userId,
-            collection: collectionId,
-            title: "Long text note",
-            content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually configure this note item from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
-        });
-        longTextItemForm.submit();
+        try {
+            const longTextItemRecord = new Record(itemsCollection);
+            const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
+            longTextItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                title: "Long text note",
+                content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually configure this note item from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
+            });
+            longTextItemForm.submit();
+        } catch(err) {
+            app.Logger().Error(
+                ERROR_NEW_USER+"create long text",
+                "userId", userId,
+                "error", err,
+            )
+        }
     },
 
     processNewItem(e) {
