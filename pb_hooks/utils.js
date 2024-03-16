@@ -1,16 +1,16 @@
-const DbTables = require(`${__hooks}/types.js`);
+const types = require(`${__hooks}/types.js`);
 
 const utils = {
     sendUserEmailVerification(e) {
         const userId = e.record.getId();
-        const userRecord = $app.dao().findRecordById(DbTables.USERS, userId);
+        const userRecord = $app.dao().findRecordById(types.DbTables.USERS, userId);
         $mails.sendRecordVerification($app, userRecord);
     },
 
     createInitialItemsForNewUser(e) {
         const userId = e.record.getId();
         const collectionId = utils.createFirstCollectionForNewUser(userId);
-        const itemsCollection = $app.dao().findCollectionByNameOrId(DbTables.ITEMS);
+        const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
 
         this.createLinkForNewUser(userId, collectionId, itemsCollection);
         this.createColourNoteForNewUser(userId, collectionId, itemsCollection);
@@ -19,7 +19,7 @@ const utils = {
     },
 
     createFirstCollectionForNewUser(userId) {
-        const itemCollectionsCollection = $app.dao().findCollectionByNameOrId(DbTables.COLLECTIONS);
+        const itemCollectionsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.COLLECTIONS);
         const collectionRecord = new Record(itemCollectionsCollection);
         const form = new RecordUpsertForm($app, collectionRecord);
     

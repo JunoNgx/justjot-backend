@@ -1,13 +1,12 @@
 /// <reference path="../pb_data/types.d.ts" />
-const DbTables = require(`${__hooks}/types.js`);
+const types = require(`${__hooks}/types.js`);
 
 onRecordAfterCreateRequest((e) => {
-    // const DbTables = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
 
-    utils.sendUserEmailVerification(e);
+    // utils.sendUserEmailVerification(e);
     utils.createInitialItemsForNewUser(e);
-}, DbTables.USERS);
+}, types.DbTables.USERS);
 
 // // Create starting data after a new user record is verified
 // onRecordAfterConfirmVerificationRequest((e) => {
