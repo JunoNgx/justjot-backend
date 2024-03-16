@@ -1,7 +1,5 @@
 /// <reference path="../pb_data/types.d.ts" />
 
-// Old version using JS Hooks, storing for reference purpose.
-
 onRecordAfterCreateRequest((e) => {
     const DbTables = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
