@@ -157,8 +157,6 @@ const funcs = {
     },
 
     setItemAsText(itemRecord) {
-        const SHORT_NOTE_LEN = 50;
-
         const form = RecordUpsertForm($app, itemRecord);
         const formData = {
             type: types.ItemTypes.TEXT
