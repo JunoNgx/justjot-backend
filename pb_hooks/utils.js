@@ -7,7 +7,7 @@ const utils = {
             '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
             '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
         
-        return urlRegex.test(urlStr);
+        return urlRegex.test(utils.tryProcessUrl(urlStr));
     },
 
     tryProcessUrl(urlStr) {

@@ -11,7 +11,7 @@ routerAdd("PATCH", "/refetch/:itemId", c => {
 
     try {
         const itemRecord = $app.dao().findRecordById(types.DbTables.ITEMS, itemId);
-        const isValidUrl = utils.isValidUrl(itemRecord.content);
+        const isValidUrl = utils.isValidUrl(itemRecord.get("content"));
         if (isValidUrl) {
             funcs.tryGetTitleAndFavicon(itemRecord);
             return;
