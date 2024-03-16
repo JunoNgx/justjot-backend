@@ -24,7 +24,7 @@ const funcs = {
         const itemCollectionsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.COLLECTIONS);
         const collectionRecord = new Record(itemCollectionsCollection);
         const form = new RecordUpsertForm($app, collectionRecord);
-    
+
         form.loadData({
             owner: userId,
             name: "First Collection",
@@ -100,6 +100,7 @@ const funcs = {
         const isValidUrl = utils.isValidUrl(content);
         if (isValidUrl) {
             funcs.setItemAsLink(itemRecord);
+            funcs.tryGetTitleAndFavicon(itemRecord);
             return;
         }
 
@@ -120,32 +121,8 @@ const funcs = {
 
     setItemAsLink(itemRecord) {
         const form = RecordUpsertForm($app, itemRecord);
-
-        // fetch doesn't work in Goja :<
-        // const getTitle = async (url) => {  
-        //     return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
-        //         .then(response => {
-        //             $app.logger().info(response);
-        //             if (response.ok) return response.json()
-        //             $app.logger().error("Failed to fetch data from url", response);
-        //         })
-        //         .then(data => {
-        //             const doc = new DOMParser().parseFromString(data.contents, "text/html");
-        //             const title = doc.querySelectorAll('title')[0];
-        //             return title.innerText;
-        //         });
-        // };
-        
-        let title;
-        // try {
-        //     title = await getTitle(content);
-        // } catch (error) {
-        //     $app.logger().error("error fetching title", error);
-        // }
-        // TODO: fetch title and favicon
         form.loadData({
             type: types.ItemTypes.LINK,
-            title
         });
         form.submit();
     },
@@ -160,6 +137,32 @@ const funcs = {
 
         form.loadData(formData);
         form.submit();
+    },
+
+    tryGetTitleAndFavicon(itemRecord) {
+        try {
+            // Try adding protocol
+            const processedUrl = utils.tryProcessUrl(itemRecord.get("content"));
+            const res = $http.send({
+                url: processedUrl,
+                method: "GET",
+            });
+    
+            if (res.statusCode !== 200) {
+                return;
+            }
+
+            console.log(res)
+
+        } catch(err) {
+            console.log(err)
+            $app.logger().warn(
+                "Failed to fetch title and favicon",
+                "err", err,
+                "itemId", itemRecord.id,
+                "content", itemRecord.get("content")
+            )
+        }
     },
 };
 

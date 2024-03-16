@@ -9,6 +9,14 @@ const utils = {
         
         return urlRegex.test(urlStr);
     },
+
+    tryProcessUrl(urlStr) {
+        if (urlStr.indexOf("http") === 0) {
+            return urlStr;
+        }
+
+        return "http://" + urlStr;
+    },
 };
 
 module.exports = utils;
