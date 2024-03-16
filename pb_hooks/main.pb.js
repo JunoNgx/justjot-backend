@@ -12,17 +12,7 @@ onRecordAfterCreateRequest((e) => {
     const collectionId = utils.createFirstCollectionForNewUser(userId);
     const itemsCollection = $app.dao().findCollectionByNameOrId(DbTables.ITEMS);
 
-    // // Create link
-    // const linkItemRecord = new Record(itemCollection);
-    // const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
-    // linkItemForm.loadData({
-    //     owner: userId,
-    //     collection: firstCollectionId,
-    //     content: "https://bmrks.com/",
-    //     // title to be processed by backend
-    // });
-    // linkItemForm.submit();
-
+    utils.createLinkForNewUser(userId, collectionId, itemsCollection);
     utils.createColourNoteForNewUser(userId, collectionId, itemsCollection);
 
     // // Create short note

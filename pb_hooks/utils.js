@@ -22,6 +22,18 @@ const utils = {
         return collectionRecord.id;
     },
 
+    createLinkForNewUser(userId, collectionId, itemsCollection) {
+        const linkItemRecord = new Record(itemsCollection);
+        const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
+        linkItemForm.loadData({
+            owner: userId,
+            collection: collectionId,
+            content: "https://www.mozilla.org/",
+            // title to be processed by `onRecordAfterCreateHook`
+        });
+        linkItemForm.submit();
+    },
+
     createColourNoteForNewUser(userId, collectionId, itemsCollection) {
         const colourItemRecord = new Record(itemsCollection);
         const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
