@@ -1,4 +1,5 @@
 /// <reference path="../pb_data/types.d.ts" />
+const DbTables = require(`${__hooks}/types.js`);
 
 onRecordAfterCreateRequest((e) => {
     const DbTables = require(`${__hooks}/types.js`);
@@ -14,7 +15,7 @@ onRecordAfterCreateRequest((e) => {
     utils.createColourNoteForNewUser(userId, collectionId, itemsCollection);
     utils.createShortTextForNewUser(userId, collectionId, itemsCollection);
     utils.createLongTextForNewUser(userId, collectionId, itemsCollection);
-}, "users");
+}, DbTables.USERS);
 
 // // Create starting data after a new user record is verified
 // onRecordAfterConfirmVerificationRequest((e) => {
