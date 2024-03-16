@@ -11,7 +11,7 @@ onRecordAfterCreateRequest((e) => {
 
 // // Create starting data after a new user record is verified
 // onRecordAfterConfirmVerificationRequest((e) => {
-
+//     utils.createInitialItemsForNewUser(e);
 // }, "users");
 
 onModelAfterCreate(async (e) => {
