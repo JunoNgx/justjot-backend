@@ -21,6 +21,18 @@ const utils = {
 
         return collectionRecord.id;
     },
+
+    createColourNoteForNewUser(userId, collectionId, itemsCollection) {
+        const colourItemRecord = new Record(itemsCollection);
+        const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
+        colourItemForm.loadData({
+            owner: userId,
+            collection: collectionId,
+            title: "Medium Aquamarine",
+            content: "#66CDAA",
+        });
+        colourItemForm.submit();
+    },
 };
 
 module.exports = utils;

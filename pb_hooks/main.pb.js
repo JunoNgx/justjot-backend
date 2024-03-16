@@ -3,19 +3,14 @@
 // Old version using JS Hooks, storing for reference purpose.
 
 onRecordAfterCreateRequest((e) => {
+    const DbTables = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
 
     const userId = e.record.getId();
     utils.sendUserEmailVerification(userId);
 
     const collectionId = utils.createFirstCollectionForNewUser(userId);
-
-    // // Create items
-    // // Retrieve the recently created Collection
-    // const firstCollection = $app.dao().findFirstRecordByData("itemCollections", "owner", userId);
-    // const firstCollectionId = firstCollection.getId();
-
-    // const itemCollection = $app.dao().findCollectionByNameOrId("items");
+    const itemsCollection = $app.dao().findCollectionByNameOrId(DbTables.ITEMS);
 
     // // Create link
     // const linkItemRecord = new Record(itemCollection);
@@ -28,16 +23,7 @@ onRecordAfterCreateRequest((e) => {
     // });
     // linkItemForm.submit();
 
-    // // Create colour
-    // const colourItemRecord = new Record(itemCollection);
-    // const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
-    // colourItemForm.loadData({
-    //     owner: userId,
-    //     collection: firstCollectionId,
-    //     title: "Medium Aquamarine",
-    //     content: "#66CDAA",
-    // });
-    // colourItemForm.submit();
+    utils.createColourNoteForNewUser(userId, collectionId, itemsCollection);
 
     // // Create short note
     // const shortTextItemRecord = new Record(itemCollection);
