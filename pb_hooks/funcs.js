@@ -21,19 +21,27 @@ const funcs = {
     },
 
     createFirstCollectionForNewUser(userId) {
-        const itemCollectionsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.COLLECTIONS);
-        const collectionRecord = new Record(itemCollectionsCollection);
-        const form = new RecordUpsertForm($app, collectionRecord);
+        try {
+            const itemCollectionsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.COLLECTIONS);
+            const collectionRecord = new Record(itemCollectionsCollection);
+            const form = new RecordUpsertForm($app, collectionRecord);
 
-        form.loadData({
-            owner: userId,
-            name: "First Collection",
-            slug: "first-collection",
-            sortOrder: 0,
-        });
-        form.submit();
+            form.loadData({
+                owner: userId,
+                name: "First Collection",
+                slug: "first-collection",
+                sortOrder: 0,
+            });
+            form.submit();
 
-        return collectionRecord.id;
+            return collectionRecord.id;
+        } catch(err) {
+            app.Logger().Error(
+				ERROR_NEW_USER+"create first collection",
+				"userId", userId,
+				"error", err,
+			)
+        }
     },
 
     createLinkForNewUser(userId, collectionId, itemsCollection) {
