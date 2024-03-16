@@ -1,8 +1,4 @@
-const DbTables = {
-    USERS: "users",
-    ITEMS: "items",
-    COLLECTIONS: "itemCollections"
-};
+const DbTables = require(`${__hooks}/types.js`);
 
 const utils = {
     sendUserEmailVerification(userId) {
@@ -26,7 +22,5 @@ const utils = {
         return collectionRecord.id;
     },
 };
-
-
 
 module.exports = utils;
