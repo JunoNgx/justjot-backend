@@ -1,5 +1,6 @@
 const types = require(`${__hooks}/types.js`);
 const consts = require(`${__hooks}/consts.js`);
+const utils = require(`${__hooks}/utils.js`);
 
 const funcs = {
     sendUserEmailVerification(e) {
@@ -84,13 +85,6 @@ const funcs = {
     },
 
     processNewItem(e) {
-        const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // validate OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // validate port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
-            '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
-
         const itemRecordId = e.model.id;
         const itemRecord = $app.dao().findFirstRecordByData("items", "id", itemRecordId);
         const content = itemRecord.get("content");
@@ -103,7 +97,7 @@ const funcs = {
         // }
 
         // Is link
-        const isValidUrl = urlPattern.test(content);
+        const isValidUrl = utils.isValidUrl(content);
         if (isValidUrl) {
             funcs.setItemAsLink(itemRecord);
             return;
