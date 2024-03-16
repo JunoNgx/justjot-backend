@@ -1,9 +1,21 @@
 const DbTables = require(`${__hooks}/types.js`);
 
 const utils = {
-    sendUserEmailVerification(userId) {
+    sendUserEmailVerification(e) {
+        const userId = e.record.getId();
         const userRecord = $app.dao().findRecordById(DbTables.USERS, userId);
         $mails.sendRecordVerification($app, userRecord);
+    },
+
+    createInitialItemsForNewUser(e) {
+        const userId = e.record.getId();
+        const collectionId = utils.createFirstCollectionForNewUser(userId);
+        const itemsCollection = $app.dao().findCollectionByNameOrId(DbTables.ITEMS);
+
+        this.createLinkForNewUser(userId, collectionId, itemsCollection);
+        this.createColourNoteForNewUser(userId, collectionId, itemsCollection);
+        this.createShortTextForNewUser(userId, collectionId, itemsCollection);
+        this.createLongTextForNewUser(userId, collectionId, itemsCollection);
     },
 
     createFirstCollectionForNewUser(userId) {

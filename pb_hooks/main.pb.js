@@ -2,19 +2,11 @@
 const DbTables = require(`${__hooks}/types.js`);
 
 onRecordAfterCreateRequest((e) => {
-    const DbTables = require(`${__hooks}/types.js`);
+    // const DbTables = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
 
-    const userId = e.record.getId();
-    // utils.sendUserEmailVerification(userId);
-
-    const collectionId = utils.createFirstCollectionForNewUser(userId);
-    const itemsCollection = $app.dao().findCollectionByNameOrId(DbTables.ITEMS);
-
-    utils.createLinkForNewUser(userId, collectionId, itemsCollection);
-    utils.createColourNoteForNewUser(userId, collectionId, itemsCollection);
-    utils.createShortTextForNewUser(userId, collectionId, itemsCollection);
-    utils.createLongTextForNewUser(userId, collectionId, itemsCollection);
+    utils.sendUserEmailVerification(e);
+    utils.createInitialItemsForNewUser(e);
 }, DbTables.USERS);
 
 // // Create starting data after a new user record is verified
