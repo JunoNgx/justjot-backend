@@ -225,6 +225,8 @@ const funcs = {
             }
 
             console.log(res)
+            title = res.raw.match(/<title.*?>(.*)<\/title>/)[1];
+            // const favicon = 
 
         } catch (err) {
             console.log(err)
