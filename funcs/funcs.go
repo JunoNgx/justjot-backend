@@ -361,8 +361,7 @@ func TryFixFaviconPath(faviconUrl string, pageUrl string) string {
 }
 
 // NOTE: this isn't multi-Unicode-codepoint aware, like specifying skintone or
-//
-//	gender of an emoji: https://unicode.org/emoji/charts/full-emoji-modifiers.html
+// gender of an emoji: https://unicode.org/emoji/charts/full-emoji-modifiers.html
 func substr(input string, start int, length int) string {
 	asRunes := []rune(input)
 
