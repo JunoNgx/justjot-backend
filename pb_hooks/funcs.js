@@ -1,7 +1,7 @@
 const types = require(`${__hooks}/types.js`);
 const consts = require(`${__hooks}/consts.js`);
 
-const utils = {
+const funcs = {
     sendUserEmailVerification(e) {
         const userId = e.record.getId();
         const userRecord = $app.dao().findRecordById(types.DbTables.USERS, userId);
@@ -10,13 +10,13 @@ const utils = {
 
     createInitialItemsForNewUser(e) {
         const userId = e.record.getId();
-        const collectionId = utils.createFirstCollectionForNewUser(userId);
+        const collectionId = funcs.createFirstCollectionForNewUser(userId);
         const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
 
-        this.createLinkForNewUser(userId, collectionId, itemsCollection);
-        this.createColourNoteForNewUser(userId, collectionId, itemsCollection);
-        this.createShortTextForNewUser(userId, collectionId, itemsCollection);
-        this.createLongTextForNewUser(userId, collectionId, itemsCollection);
+        funcs.createLinkForNewUser(userId, collectionId, itemsCollection);
+        funcs.createColourNoteForNewUser(userId, collectionId, itemsCollection);
+        funcs.createShortTextForNewUser(userId, collectionId, itemsCollection);
+        funcs.createLongTextForNewUser(userId, collectionId, itemsCollection);
     },
 
     createFirstCollectionForNewUser(userId) {
@@ -98,19 +98,19 @@ const utils = {
         // // Is todo list
         // const firstChar = content.substring(0, 1);
         // if (firstChar === "*" || firstChar === "-") {
-        //   this.setItemAsTodoList(itemRecord);
+        //   funcs.setItemAsTodoList(itemRecord);
         //   return;
         // }
 
         // Is link
         const isValidUrl = urlPattern.test(content);
         if (isValidUrl) {
-            this.setItemAsLink(itemRecord);
+            funcs.setItemAsLink(itemRecord);
             return;
         }
 
         // Fallback, is note
-        this.setItemAsText(itemRecord);
+        funcs.setItemAsText(itemRecord);
     },
 
     setItemAsTodoList(itemRecord) {
@@ -171,4 +171,4 @@ const utils = {
     },
 };
 
-module.exports = utils;
+module.exports = funcs;

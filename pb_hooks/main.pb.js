@@ -2,19 +2,19 @@
 const types = require(`${__hooks}/types.js`);
 
 onRecordAfterCreateRequest((e) => {
-    const utils = require(`${__hooks}/utils.js`);
+    const funcs = require(`${__hooks}/funcs.js`);
 
-    // utils.sendUserEmailVerification(e);
-    utils.createInitialItemsForNewUser(e);
+    // funcs.sendUserEmailVerification(e);
+    funcs.createInitialItemsForNewUser(e);
 }, types.DbTables.USERS);
 
 // // Create starting data after a new user record is verified
 // onRecordAfterConfirmVerificationRequest((e) => {
-//     utils.createInitialItemsForNewUser(e);
+//     funcs.createInitialItemsForNewUser(e);
 // }, "users");
 
 onModelAfterCreate(async (e) => {
-    const utils = require(`${__hooks}/utils.js`);
+    const funcs = require(`${__hooks}/funcs.js`);
     
-    utils.processNewItem(e);
+    funcs.processNewItem(e);
 }, types.DbTables.ITEMS);
