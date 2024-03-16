@@ -11,6 +11,7 @@ onRecordAfterCreateRequest((e) => {
 
 // // Create starting data after a new user record is verified
 // onRecordAfterConfirmVerificationRequest((e) => {
+//     const funcs = require(`${__hooks}/funcs.js`);
 //     funcs.createInitialItemsForNewUser(e);
 // }, "users");
 
