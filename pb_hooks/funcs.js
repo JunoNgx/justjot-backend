@@ -224,9 +224,16 @@ const funcs = {
                 return;
             }
 
-            console.log(res)
             title = res.raw.match(/<title.*?>(.*)<\/title>/)[1];
-            // const favicon = 
+            // const favicon = res.raw.seadrch(/(rel=['"](?:shortcut )?icon['"])|(href=['"]([^'"]+)[?'"])/)
+            const favicon = res.raw.match(/<link *.*(?: *href="([^"]*(\.png|\.ico))"| *type="(?:image\/png|image\/vnd\.microsoft\.icon|image\/x-icon)"| *rel="(?:icon|shortcut icon|apple-touch-icon)").*>/);
+
+            const form = RecordUpsertForm($app, itemRecord);
+            form.loadData({
+                title,
+                faviconUrl: favicon[1]
+            });
+            form.submit();
 
         } catch (err) {
             console.log(err)
