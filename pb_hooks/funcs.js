@@ -35,12 +35,12 @@ const funcs = {
             form.submit();
 
             return collectionRecord.id;
-        } catch(err) {
+        } catch (err) {
             app.Logger().Error(
-				ERROR_NEW_USER+"create first collection",
-				"userId", userId,
-				"error", err,
-			)
+                ERROR_NEW_USER + "create first collection",
+                "userId", userId,
+                "error", err,
+            )
         }
     },
 
@@ -55,9 +55,9 @@ const funcs = {
                 // title to be processed by `onRecordAfterCreateHook`
             });
             linkItemForm.submit();
-        } catch(err) {
+        } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER+"create link",
+                ERROR_NEW_USER + "create link",
                 "userId", userId,
                 "error", err,
             )
@@ -75,9 +75,9 @@ const funcs = {
                 content: "#66CDAA",
             });
             colourItemForm.submit();
-        } catch(err) {
+        } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER+"create colour note",
+                ERROR_NEW_USER + "create colour note",
                 "userId", userId,
                 "error", err,
             )
@@ -95,9 +95,9 @@ const funcs = {
                 content: "Click here to copy",
             });
             shortTextItemForm.submit();
-        } catch(err) {
+        } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER+"create short text",
+                ERROR_NEW_USER + "create short text",
                 "userId", userId,
                 "error", err,
             )
@@ -115,9 +115,9 @@ const funcs = {
                 content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually configure this note item from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
             });
             longTextItemForm.submit();
-        } catch(err) {
+        } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER+"create long text",
+                ERROR_NEW_USER + "create long text",
                 "userId", userId,
                 "error", err,
             )
@@ -149,34 +149,64 @@ const funcs = {
     },
 
     setItemAsTodoList(itemRecord) {
-        const form = RecordUpsertForm($app, itemRecord);
-        // Use submitted content as title
-        form.loadData({
-            type: types.ItemTypes.TODO,
-            title: content,
-            content: ""
-        });
-        form.submit();
+        try {
+            const form = RecordUpsertForm($app, itemRecord);
+            // Use submitted content as title
+            form.loadData({
+                type: types.ItemTypes.TODO,
+                title: content,
+                content: ""
+            });
+            form.submit();
+        } catch (err) {
+            app.Logger().Error(
+                ERROR_NEW_ITEM + "set item as todo list",
+                "itemRecordId", itemRecord.id,
+                "content", content,
+                "owner", itemRecord.owner,
+                "error", err,
+            )
+        }
     },
 
     setItemAsLink(itemRecord) {
-        const form = RecordUpsertForm($app, itemRecord);
-        form.loadData({
-            type: types.ItemTypes.LINK,
-        });
-        form.submit();
+        try {
+            const form = RecordUpsertForm($app, itemRecord);
+            form.loadData({
+                type: types.ItemTypes.LINK,
+            });
+            form.submit();
+        } catch (err) {
+            app.Logger().Error(
+                ERROR_NEW_ITEM + "set item as link",
+                "itemRecordId", itemRecord.id,
+                "content", content,
+                "owner", itemRecord.owner,
+                "error", err,
+            )
+        }
     },
 
     setItemAsText(itemRecord) {
-        const form = RecordUpsertForm($app, itemRecord);
-        const formData = {
-            type: types.ItemTypes.TEXT
-        };
-        if (itemRecord.get("content").length <= consts.SHORT_NOTE_LEN)
-            formData.shouldCopyOnClick = true;
+        try {
+            const form = RecordUpsertForm($app, itemRecord);
+            const formData = {
+                type: types.ItemTypes.TEXT
+            };
+            if (itemRecord.get("content").length <= consts.SHORT_NOTE_LEN)
+                formData.shouldCopyOnClick = true;
 
-        form.loadData(formData);
-        form.submit();
+            form.loadData(formData);
+            form.submit();
+        } catch (err) {
+            app.Logger().Error(
+                ERROR_NEW_ITEM + "set item as text",
+                "itemRecordId", itemRecord.id,
+                "content", content,
+                "owner", itemRecord.owner,
+                "error", err,
+            )
+        }
     },
 
     tryGetTitleAndFavicon(itemRecord) {
@@ -187,14 +217,14 @@ const funcs = {
                 url: processedUrl,
                 method: "GET",
             });
-    
+
             if (res.statusCode !== 200) {
                 return;
             }
 
             console.log(res)
 
-        } catch(err) {
+        } catch (err) {
             console.log(err)
             $app.logger().warn(
                 "Failed to fetch title and favicon",
