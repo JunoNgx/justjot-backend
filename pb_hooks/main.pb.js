@@ -3,75 +3,81 @@
 // Old version using JS Hooks, storing for reference purpose.
 
 onRecordAfterCreateRequest((e) => {
+    const utils = require(`${__hooks}/utils.js`);
+
     const userId = e.record.getId();
 
-    // Send email verification after a new user record is created
-    const userRecord = $app.dao().findRecordById("users", userId);
-    $mails.sendRecordVerification($app, userRecord);
+    utils.sendUserEmailVerification(userId);
 
-    // Create First Collection
-    const itemCollectionsCollection = $app.dao().findCollectionByNameOrId("itemCollections");
-    const newItemCollectionRecord = new Record(itemCollectionsCollection);
-    const form = new RecordUpsertForm($app, newItemCollectionRecord);
+    // const userId = e.record.getId();
 
-    form.loadData({
-        owner: userId,
-        name: "First Collection",
-        slug: "first-collection",
-        sortOrder: 0,
-    });
-    form.submit();
+    // // Send email verification after a new user record is created
+    // const userRecord = $app.dao().findRecordById("users", userId);
+    // $mails.sendRecordVerification($app, userRecord);
 
-    // Create items
-    // Retrieve the recently created Collection
-    const firstCollection = $app.dao().findFirstRecordByData("itemCollections", "owner", userId);
-    const firstCollectionId = firstCollection.getId();
+    // // Create First Collection
+    // const itemCollectionsCollection = $app.dao().findCollectionByNameOrId("itemCollections");
+    // const newItemCollectionRecord = new Record(itemCollectionsCollection);
+    // const form = new RecordUpsertForm($app, newItemCollectionRecord);
 
-    const itemCollection = $app.dao().findCollectionByNameOrId("items");
+    // form.loadData({
+    //     owner: userId,
+    //     name: "First Collection",
+    //     slug: "first-collection",
+    //     sortOrder: 0,
+    // });
+    // form.submit();
 
-    // Create link
-    const linkItemRecord = new Record(itemCollection);
-    const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
-    linkItemForm.loadData({
-        owner: userId,
-        collection: firstCollectionId,
-        content: "https://bmrks.com/",
-        // title to be processed by backend
-    });
-    linkItemForm.submit();
+    // // Create items
+    // // Retrieve the recently created Collection
+    // const firstCollection = $app.dao().findFirstRecordByData("itemCollections", "owner", userId);
+    // const firstCollectionId = firstCollection.getId();
 
-    // Create colour
-    const colourItemRecord = new Record(itemCollection);
-    const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
-    colourItemForm.loadData({
-        owner: userId,
-        collection: firstCollectionId,
-        title: "Medium Aquamarine",
-        content: "#66CDAA",
-    });
-    colourItemForm.submit();
+    // const itemCollection = $app.dao().findCollectionByNameOrId("items");
 
-    // Create short note
-    const shortTextItemRecord = new Record(itemCollection);
-    const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
-    shortTextItemForm.loadData({
-        owner: userId,
-        collection: firstCollectionId,
-        title: "Short text note",
-        content: "Click here to copy",
-    });
-    shortTextItemForm.submit();
+    // // Create link
+    // const linkItemRecord = new Record(itemCollection);
+    // const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
+    // linkItemForm.loadData({
+    //     owner: userId,
+    //     collection: firstCollectionId,
+    //     content: "https://bmrks.com/",
+    //     // title to be processed by backend
+    // });
+    // linkItemForm.submit();
 
-    // Create long note
-    const longTextItemRecord = new Record(itemCollection);
-    const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
-    longTextItemForm.loadData({
-        owner: userId,
-        collection: firstCollectionId,
-        title: "Long text note",
-        content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
-    });
-    longTextItemForm.submit();
+    // // Create colour
+    // const colourItemRecord = new Record(itemCollection);
+    // const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
+    // colourItemForm.loadData({
+    //     owner: userId,
+    //     collection: firstCollectionId,
+    //     title: "Medium Aquamarine",
+    //     content: "#66CDAA",
+    // });
+    // colourItemForm.submit();
+
+    // // Create short note
+    // const shortTextItemRecord = new Record(itemCollection);
+    // const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
+    // shortTextItemForm.loadData({
+    //     owner: userId,
+    //     collection: firstCollectionId,
+    //     title: "Short text note",
+    //     content: "Click here to copy",
+    // });
+    // shortTextItemForm.submit();
+
+    // // Create long note
+    // const longTextItemRecord = new Record(itemCollection);
+    // const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
+    // longTextItemForm.loadData({
+    //     owner: userId,
+    //     collection: firstCollectionId,
+    //     title: "Long text note",
+    //     content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
+    // });
+    // longTextItemForm.submit();
 
 }, "users");
 
