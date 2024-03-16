@@ -6,21 +6,9 @@ onRecordAfterCreateRequest((e) => {
     const utils = require(`${__hooks}/utils.js`);
 
     const userId = e.record.getId();
-
     utils.sendUserEmailVerification(userId);
 
-    // // Create First Collection
-    // const itemCollectionsCollection = $app.dao().findCollectionByNameOrId("itemCollections");
-    // const newItemCollectionRecord = new Record(itemCollectionsCollection);
-    // const form = new RecordUpsertForm($app, newItemCollectionRecord);
-
-    // form.loadData({
-    //     owner: userId,
-    //     name: "First Collection",
-    //     slug: "first-collection",
-    //     sortOrder: 0,
-    // });
-    // form.submit();
+    const collectionId = utils.createFirstCollectionForNewUser(userId);
 
     // // Create items
     // // Retrieve the recently created Collection
