@@ -37,7 +37,7 @@ const funcs = {
             return collectionRecord.id;
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER + "create first collection",
+                consts.ERROR_NEW_USER + "create first collection",
                 "userId", userId,
                 "error", err,
             )
@@ -57,7 +57,7 @@ const funcs = {
             linkItemForm.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER + "create link",
+                consts.ERROR_NEW_USER + "create link",
                 "userId", userId,
                 "error", err,
             )
@@ -77,7 +77,7 @@ const funcs = {
             colourItemForm.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER + "create colour note",
+                consts.ERROR_NEW_USER + "create colour note",
                 "userId", userId,
                 "error", err,
             )
@@ -97,7 +97,7 @@ const funcs = {
             shortTextItemForm.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER + "create short text",
+                consts.ERROR_NEW_USER + "create short text",
                 "userId", userId,
                 "error", err,
             )
@@ -117,7 +117,7 @@ const funcs = {
             longTextItemForm.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_USER + "create long text",
+                consts.ERROR_NEW_USER + "create long text",
                 "userId", userId,
                 "error", err,
             )
@@ -160,7 +160,7 @@ const funcs = {
             form.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_ITEM + "set item as todo list",
+                consts.ERROR_NEW_ITEM + "set item as todo list",
                 "itemRecordId", itemRecord.id,
                 "content", content,
                 "owner", itemRecord.owner,
@@ -178,7 +178,7 @@ const funcs = {
             form.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_ITEM + "set item as link",
+                consts.ERROR_NEW_ITEM + "set item as link",
                 "itemRecordId", itemRecord.id,
                 "content", content,
                 "owner", itemRecord.owner,
@@ -200,7 +200,7 @@ const funcs = {
             form.submit();
         } catch (err) {
             app.Logger().Error(
-                ERROR_NEW_ITEM + "set item as text",
+                consts.ERROR_NEW_ITEM + "set item as text",
                 "itemRecordId", itemRecord.id,
                 "content", content,
                 "owner", itemRecord.owner,
