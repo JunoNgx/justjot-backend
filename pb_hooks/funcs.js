@@ -40,7 +40,7 @@ const funcs = {
                 consts.ERROR_NEW_USER + "create first collection",
                 "userId", userId,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -60,7 +60,7 @@ const funcs = {
                 consts.ERROR_NEW_USER + "create link",
                 "userId", userId,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -80,7 +80,7 @@ const funcs = {
                 consts.ERROR_NEW_USER + "create colour note",
                 "userId", userId,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -100,7 +100,7 @@ const funcs = {
                 consts.ERROR_NEW_USER + "create short text",
                 "userId", userId,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -120,7 +120,7 @@ const funcs = {
                 consts.ERROR_NEW_USER + "create long text",
                 "userId", userId,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -165,7 +165,7 @@ const funcs = {
                 "content", content,
                 "owner", itemRecord.owner,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -183,7 +183,7 @@ const funcs = {
                 "content", content,
                 "owner", itemRecord.owner,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -205,7 +205,7 @@ const funcs = {
                 "content", content,
                 "owner", itemRecord.owner,
                 "error", err,
-            )
+            );
         }
     },
 
@@ -231,7 +231,7 @@ const funcs = {
                 "err", err,
                 "itemId", itemRecord.id,
                 "content", itemRecord.get("content")
-            )
+            );
         }
     },
 
