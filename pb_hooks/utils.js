@@ -45,6 +45,30 @@ const utils = {
         });
         colourItemForm.submit();
     },
+
+    createShortTextForNewUser(userId, collectionId, itemsCollection) {
+        const shortTextItemRecord = new Record(itemsCollection);
+        const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
+        shortTextItemForm.loadData({
+            owner: userId,
+            collection: collectionId,
+            title: "Short text note",
+            content: "Click here to copy",
+        });
+        shortTextItemForm.submit();
+    },
+
+    createLongTextForNewUser(userId, collectionId, itemsCollection) {
+        const longTextItemRecord = new Record(itemsCollection);
+        const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
+        longTextItemForm.loadData({
+            owner: userId,
+            collection: collectionId,
+            title: "Long text note",
+            content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually configure this note item from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
+        });
+        longTextItemForm.submit();
+    },
 };
 
 module.exports = utils;

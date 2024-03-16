@@ -7,36 +7,15 @@ onRecordAfterCreateRequest((e) => {
     const utils = require(`${__hooks}/utils.js`);
 
     const userId = e.record.getId();
-    utils.sendUserEmailVerification(userId);
+    // utils.sendUserEmailVerification(userId);
 
     const collectionId = utils.createFirstCollectionForNewUser(userId);
     const itemsCollection = $app.dao().findCollectionByNameOrId(DbTables.ITEMS);
 
     utils.createLinkForNewUser(userId, collectionId, itemsCollection);
     utils.createColourNoteForNewUser(userId, collectionId, itemsCollection);
-
-    // // Create short note
-    // const shortTextItemRecord = new Record(itemCollection);
-    // const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
-    // shortTextItemForm.loadData({
-    //     owner: userId,
-    //     collection: firstCollectionId,
-    //     title: "Short text note",
-    //     content: "Click here to copy",
-    // });
-    // shortTextItemForm.submit();
-
-    // // Create long note
-    // const longTextItemRecord = new Record(itemCollection);
-    // const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
-    // longTextItemForm.loadData({
-    //     owner: userId,
-    //     collection: firstCollectionId,
-    //     title: "Long text note",
-    //     content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually change this behavior from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
-    // });
-    // longTextItemForm.submit();
-
+    utils.createShortTextForNewUser(userId, collectionId, itemsCollection);
+    utils.createLongTextForNewUser(userId, collectionId, itemsCollection);
 }, "users");
 
 // // Create starting data after a new user record is verified
