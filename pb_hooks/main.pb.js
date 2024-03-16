@@ -1,4 +1,5 @@
 /// <reference path="../pb_data/types.d.ts" />
+// ES5 dynamic import to accomodate Goja caveats
 const types = require(`${__hooks}/types.js`);
 
 onRecordAfterCreateRequest((e) => {
