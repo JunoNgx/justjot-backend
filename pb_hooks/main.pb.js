@@ -3,13 +3,14 @@
 const types = require(`${__hooks}/types.js`);
 
 routerAdd("POST", "/refetch/:itemId", c => {
+    const types = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
     const funcs = require(`${__hooks}/funcs.js`);
 
     const itemId = c.pathParam("itemId");
 
     try {
-        const itemRecord = $app.dao().findRecordById(itemId);
+        const itemRecord = $app.dao().findRecordById(types.DbTables.ITEMS, itemId);
         const isValidUrl = utils.isValidUrl(itemRecord.content);
         if (isValidUrl) {
             funcs.tryGetTitleAndFavicon(itemRecord);
@@ -19,12 +20,14 @@ routerAdd("POST", "/refetch/:itemId", c => {
         $app.logger().warn(
             "Was requested to refetch, but not a valid url",
             "itemId", itemId,
-            "content", content,
+            "content", itemRecord.content,
         );
+        return;
 
     } catch (err) {
         $app.logger().error(
             "Error processing request to refetch hyperlink",
+            "err", err,
             "itemId", itemId,
             "error", err,
         );
