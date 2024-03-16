@@ -83,7 +83,6 @@ const utils = {
     },
 
     processNewItem(e) {
-        const SHORT_NOTE_LEN = 50;
         const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
             '((\\d{1,3}\\.){3}\\d{1,3}))'+ // validate OR ip (v4) address
@@ -94,59 +93,82 @@ const utils = {
         const itemRecordId = e.model.id;
         const itemRecord = $app.dao().findFirstRecordByData("items", "id", itemRecordId);
         const content = itemRecord.get("content");
-        const form = RecordUpsertForm($app, itemRecord);
 
         // // Is todo list
         // const firstChar = content.substring(0, 1);
         // if (firstChar === "*" || firstChar === "-") {
-        //     // Use submitted content as title
-        //     form.loadData({
-        //         type: "todoList",
-        //         title: content,
-        //         content: ""
-        //     });
-        //     form.submit();
-        //     return;
+        //   this.setItemAsTodoList(itemRecord);
+        //   return;
         // }
 
         // Is link
         const isValidUrl = urlPattern.test(content);
         if (isValidUrl) {
-            // fetch doesn't work in Goja :<
-            // const getTitle = async (url) => {  
-            //     return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
-            //         .then(response => {
-            //             $app.logger().info(response);
-            //             if (response.ok) return response.json()
-            //             $app.logger().error("Failed to fetch data from url", response);
-            //         })
-            //         .then(data => {
-            //             const doc = new DOMParser().parseFromString(data.contents, "text/html");
-            //             const title = doc.querySelectorAll('title')[0];
-            //             return title.innerText;
-            //         });
-            // };
-            
-            let title;
-            // try {
-            //     title = await getTitle(content);
-            // } catch (error) {
-            //     $app.logger().error("error fetching title", error);
-            // }
-            // TODO: fetch title and favicon
-            form.loadData({
-                type: "link",
-                title
-            });
-            form.submit();
+            this.setItemAsLink(itemRecord);
             return;
         }
 
-        // Is note
+        // Fallback, is note
+        this.setItemAsText(itemRecord);
+    },
+
+    setItemAsTodoList(itemRecord) {
+        const form = RecordUpsertForm($app, itemRecord);
+        // Use submitted content as title
+        form.loadData({
+            type: types.ItemTypes.TODO,
+            title: content,
+            content: ""
+        });
+        form.submit();
+    },
+
+    setItemAsLink(itemRecord) {
+        const form = RecordUpsertForm($app, itemRecord);
+
+        // fetch doesn't work in Goja :<
+        // const getTitle = async (url) => {  
+        //     return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
+        //         .then(response => {
+        //             $app.logger().info(response);
+        //             if (response.ok) return response.json()
+        //             $app.logger().error("Failed to fetch data from url", response);
+        //         })
+        //         .then(data => {
+        //             const doc = new DOMParser().parseFromString(data.contents, "text/html");
+        //             const title = doc.querySelectorAll('title')[0];
+        //             return title.innerText;
+        //         });
+        // };
+        
+        let title;
+        // try {
+        //     title = await getTitle(content);
+        // } catch (error) {
+        //     $app.logger().error("error fetching title", error);
+        // }
+        // TODO: fetch title and favicon
+        form.loadData({
+            type: types.ItemTypes.LINK,
+            title
+        });
+        form.submit();
+    },
+
+    setItemAsText(itemRecord) {
+        console.log("set item as text")
+        const SHORT_NOTE_LEN = 50;
+
+        const form = RecordUpsertForm($app, itemRecord);
         const formData = {
-            type: "text"
+            type: types.ItemTypes.TEXT
         };
-        if (content.length <= SHORT_NOTE_LEN) formData.shouldCopyUponClick = true;
+        // console.log(JSON.stringify(formData))
+
+        // if (content.length <= SHORT_NOTE_LEN)
+        //     formData.shouldCopyOnClick = true;
+        // console.log(JSON.stringify(formData))
+
         form.loadData(formData);
         form.submit();
     },
