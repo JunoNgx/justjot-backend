@@ -2,7 +2,7 @@
 // ES5 dynamic import to accomodate Goja caveats
 const types = require(`${__hooks}/types.js`);
 
-routerAdd("POST", "/refetch/:itemId", c => {
+routerAdd("PATCH", "/refetch/:itemId", c => {
     const types = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
     const funcs = require(`${__hooks}/funcs.js`);
