@@ -228,10 +228,15 @@ const funcs = {
             // Known bug: Will fail if href comes before rel
             const favicon = res.raw.match(/<link *.*(?: *href="([^"]*(\.png|\.ico))"| *type="(?:image\/png|image\/vnd\.microsoft\.icon|image\/x-icon)"| *rel="(?:icon|shortcut icon|apple-touch-icon)").*>/)[1];
 
+            const processedFaviconUrl = utils.tryProcessFaviconUrl(
+                favicon,
+                processedUrl,
+            );
+
             const form = RecordUpsertForm($app, itemRecord);
             form.loadData({
                 title,
-                faviconUrl: favicon
+                faviconUrl: processedFaviconUrl
             });
             form.submit();
 
