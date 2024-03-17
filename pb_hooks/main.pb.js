@@ -2,7 +2,7 @@
 // ES5 dynamic import to accomodate Goja caveats
 const types = require(`${__hooks}/types.js`);
 
-routerAdd("PATCH", "/refetch/:itemId", c => {
+routerAdd("PATCH", "/refetch/:ownerId/:itemId", c => {
     const types = require(`${__hooks}/types.js`);
     const utils = require(`${__hooks}/utils.js`);
     const funcs = require(`${__hooks}/funcs.js`);
@@ -32,7 +32,7 @@ routerAdd("PATCH", "/refetch/:itemId", c => {
             "error", err,
         );
     }
-});
+}, $apis.requireAdminOrOwnerAuth("ownerId"));
 
 onRecordAfterCreateRequest((e) => {
     const funcs = require(`${__hooks}/funcs.js`);
