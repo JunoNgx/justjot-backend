@@ -10,6 +10,7 @@ const utils = {
         return urlRegex.test(utils.tryProcessUrl(urlStr));
     },
 
+    // Make use of shorthand url without protocol; e.g. mozilla.org
     tryProcessUrl(urlStr) {
         if (urlStr.indexOf("http") === 0) {
             return urlStr;
