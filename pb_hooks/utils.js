@@ -17,6 +17,32 @@ const utils = {
 
         return "http://" + urlStr;
     },
+
+    getProtocolAndTld(url) {
+        const regex = /^(https?:\/\/)?([^\/]+)(\/.*)?$/;
+        const match = url.match(regex);
+        
+        if (match) {
+            const protocol = match[1] ? match[1].slice(0, -3) : 'http'; // Default to http if protocol is not specified
+            const domain = match[2];
+            const tld = domain.split('.').slice(-2).join('.'); // Get the last two parts of the domain
+            
+            return { protocol, tld };
+        } else {
+            return null; // Invalid URL
+        }
+    },
+
+    // Some favicon comes in as relative path
+    tryProcessFaviconUrl(favicon, originalProcessedUrl) {
+        if (favicon.indexOf("http") === 0) {
+            return favicon;
+        }
+
+        const urlData = utils.getProtocolAndTld(originalProcessedUrl);
+
+        return `${urlData.protocol}://${urlData.tld}${favicon}`;
+    },
 };
 
 module.exports = utils;
