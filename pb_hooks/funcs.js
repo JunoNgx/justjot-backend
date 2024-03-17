@@ -224,14 +224,14 @@ const funcs = {
                 return;
             }
 
-            title = res.raw.match(/<title.*?>(.*)<\/title>/)[1];
-            // const favicon = res.raw.seadrch(/(rel=['"](?:shortcut )?icon['"])|(href=['"]([^'"]+)[?'"])/)
-            const favicon = res.raw.match(/<link *.*(?: *href="([^"]*(\.png|\.ico))"| *type="(?:image\/png|image\/vnd\.microsoft\.icon|image\/x-icon)"| *rel="(?:icon|shortcut icon|apple-touch-icon)").*>/);
+            const title = res.raw.match(/<title.*?>(.*)<\/title>/)[1];
+            // Known bug: Will fail if href comes before rel
+            const favicon = res.raw.match(/<link *.*(?: *href="([^"]*(\.png|\.ico))"| *type="(?:image\/png|image\/vnd\.microsoft\.icon|image\/x-icon)"| *rel="(?:icon|shortcut icon|apple-touch-icon)").*>/)[1];
 
             const form = RecordUpsertForm($app, itemRecord);
             form.loadData({
                 title,
-                faviconUrl: favicon[1]
+                faviconUrl: favicon
             });
             form.submit();
 
