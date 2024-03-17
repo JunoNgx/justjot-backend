@@ -23,7 +23,7 @@ func main() {
 	})
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		e.Router.POST("/refetch/:itemId", func(c echo.Context) error {
+		e.Router.PATCH("/refetch/:ownerId/:itemId", func(c echo.Context) error {
 			itemId := c.PathParam("itemId")
 			fmt.Println("refetch", itemId)
 			itemRecord, err := app.Dao().FindRecordById("items", itemId)
@@ -40,7 +40,7 @@ func main() {
 			funcs.TryFetchTitleAndFavicon(app, itemRecord, processedUrl)
 
 			return c.JSON(http.StatusOK, map[string]string{"message": "Refetch successful"})
-		})
+		}, apis.RequireAdminOrOwnerAuth("ownerId"))
 
 		return nil
 	})
