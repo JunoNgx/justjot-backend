@@ -5,4 +5,4 @@ const consts = {
     ERROR_NEW_ITEM: "[ERROR: handle new item] ",
 }
 
-module.export = consts;
+module.exports = consts;
