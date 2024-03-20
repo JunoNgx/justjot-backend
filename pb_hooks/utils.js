@@ -16,7 +16,7 @@ const utils = {
             return urlStr;
         }
 
-        return "http://" + urlStr;
+        return "https://" + urlStr;
     },
 
     getProtocolAndTld(url) {
