@@ -239,6 +239,7 @@ const funcs = {
             const form = RecordUpsertForm($app, itemRecord);
             form.loadData({
                 title,
+                content: processedUrl,
                 faviconUrl: processedFaviconUrl
             });
             form.submit();
