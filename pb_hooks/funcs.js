@@ -220,6 +220,7 @@ const funcs = {
             const res = $http.send({
                 url: processedUrl,
                 method: "GET",
+                timeout: 2,
             });
 
             if (res.statusCode !== 200) {
