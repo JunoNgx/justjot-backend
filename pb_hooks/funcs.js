@@ -212,6 +212,8 @@ const funcs = {
     },
 
     tryGetTitleAndFavicon(itemRecord) {
+        const form = RecordUpsertForm($app, itemRecord);
+
         try {
             // Try adding protocol
             const processedUrl = utils.tryProcessUrl(itemRecord.get("content"));
@@ -221,6 +223,10 @@ const funcs = {
             });
 
             if (res.statusCode !== 200) {
+                form.loadData({
+                    content: processedUrl,
+                });
+                form.submit();
                 return;
             }
 
@@ -236,7 +242,6 @@ const funcs = {
                 );
             }
 
-            const form = RecordUpsertForm($app, itemRecord);
             form.loadData({
                 title,
                 content: processedUrl,
