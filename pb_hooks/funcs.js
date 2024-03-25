@@ -233,7 +233,7 @@ const funcs = {
 
             const title = res.raw.match(/<title.*?>(.*)<\/title>/)[1];
             // Known bug: Will fail if href comes before rel
-            const favicon = res.raw.match(/<link *.*(?: *href="([^"]*(\.png|\.ico))"| *type="(?:image\/png|image\/vnd\.microsoft\.icon|image\/x-icon)"| *rel="(?:icon|shortcut icon|apple-touch-icon)").*>/);
+            const favicon = res.raw.match(/<link\s+[^>]*?rel=["'](?:shortcut )?icon["'][^>]*?href=["']([^"']+)["'][^>]*?>/);
 
             let processedFaviconUrl;
             if (favicon && favicon[1]) {
