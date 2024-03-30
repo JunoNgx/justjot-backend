@@ -164,7 +164,7 @@ const funcs = {
             app.logger().Error(
                 consts.ERROR_NEW_ITEM + "set item as todo list",
                 "itemRecordId", itemRecord.id,
-                "content", content,
+                "content", itemRecord.content,
                 "owner", itemRecord.owner,
                 "error", err,
             );
@@ -182,7 +182,7 @@ const funcs = {
             app.logger().Error(
                 consts.ERROR_NEW_ITEM + "set item as link",
                 "itemRecordId", itemRecord.id,
-                "content", content,
+                "content", itemRecord.content,
                 "owner", itemRecord.owner,
                 "error", err,
             );
@@ -204,7 +204,7 @@ const funcs = {
             app.logger().Error(
                 consts.ERROR_NEW_ITEM + "set item as text",
                 "itemRecordId", itemRecord.id,
-                "content", content,
+                "content", itemRecord.content,
                 "owner", itemRecord.owner,
                 "error", err,
             );
