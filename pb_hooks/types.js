@@ -8,7 +8,7 @@ const types = {
     ItemTypes: {
         TEXT: "text",
         LINK: "link",
-        TODO: "todoList"
+        TODO: "todo"
     },
 }
 
