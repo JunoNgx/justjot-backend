@@ -47,8 +47,9 @@ onRecordAfterCreateRequest((e) => {
 //     funcs.createInitialItemsForNewUser(e);
 // }, "users");
 
-onModelAfterCreate(async (e) => {
+onRecordBeforeCreateRequest(async (e) => {
     const funcs = require(`${__hooks}/funcs.js`);
     
+    e.Record.set("type", "todo");
     funcs.processNewItem(e);
 }, types.DbTables.ITEMS);
