@@ -41,7 +41,7 @@ const funcs = {
             $app.logger().error(
                 consts.ERROR_NEW_USER + "create first collection",
                 "userId", userId,
-                "error", err,
+                "error", err.toString(),
             );
         }
     },
@@ -61,7 +61,7 @@ const funcs = {
             $app.logger().error(
                 consts.ERROR_NEW_USER + "create link",
                 "userId", userId,
-                "error", err,
+                "error", err.toString(),
             );
         }
     },
@@ -81,7 +81,7 @@ const funcs = {
             $app.logger().error(
                 consts.ERROR_NEW_USER + "create colour note",
                 "userId", userId,
-                "error", err,
+                "error", err.toString(),
             );
         }
     },
@@ -101,7 +101,7 @@ const funcs = {
             $app.logger().error(
                 consts.ERROR_NEW_USER + "create short text",
                 "userId", userId,
-                "error", err,
+                "error", err.toString(),
             );
         }
     },
@@ -121,7 +121,7 @@ const funcs = {
             $app.logger().error(
                 consts.ERROR_NEW_USER + "create long text",
                 "userId", userId,
-                "error", err,
+                "error", err.toString(),
             );
         }
     },
@@ -165,8 +165,8 @@ const funcs = {
                 consts.ERROR_NEW_ITEM + "set item as todo list",
                 "itemRecordId", itemRecord.id,
                 "content", itemRecord.content,
-                "owner", itemRecord.owner,
-                "error", err,
+                "owner", itemRecord.get("owner"),
+                "error", err.toString(),
             );
         }
     },
@@ -183,8 +183,8 @@ const funcs = {
                 consts.ERROR_NEW_ITEM + "set item as link",
                 "itemRecordId", itemRecord.id,
                 "content", itemRecord.content,
-                "owner", itemRecord.owner,
-                "error", err,
+                "owner", itemRecord.get("owner"),
+                "error", err.toString(),
             );
         }
     },
@@ -205,8 +205,8 @@ const funcs = {
                 consts.ERROR_NEW_ITEM + "set item as text",
                 "itemRecordId", itemRecord.id,
                 "content", itemRecord.content,
-                "owner", itemRecord.owner,
-                "error", err,
+                "owner", itemRecord.get("owner"),
+                "error", err.toString(),
             );
         }
     },
