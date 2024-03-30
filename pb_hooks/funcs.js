@@ -131,12 +131,12 @@ const funcs = {
         const itemRecord = $app.dao().findFirstRecordByData("items", "id", itemRecordId);
         const content = itemRecord.get("content");
 
-        // // Is todo list
-        // const firstChar = content.substring(0, 1);
-        // if (firstChar === "*" || firstChar === "-") {
-        //   funcs.setItemAsTodoList(itemRecord);
-        //   return;
-        // }
+        // Is todo list
+        const firstFourChars = content.substring(0, 4);
+        if (firstFourChars === ":td:") {
+          funcs.setItemAsTodo(itemRecord);
+          return;
+        }
 
         // Is link
         const isValidUrl = utils.isValidUrl(content);
@@ -150,21 +150,24 @@ const funcs = {
         funcs.setItemAsText(itemRecord);
     },
 
-    setItemAsTodoList(itemRecord) {
+    setItemAsTodo(itemRecord) {
         try {
+            const submittedContent = itemRecord.get("content");
+            const processedContent = submittedContent.
+                substring(4, submittedContent.length).trim();
+
             const form = RecordUpsertForm($app, itemRecord);
-            // Use submitted content as title
+            // Use processed submitted content as title
             form.loadData({
                 type: types.ItemTypes.TODO,
-                title: content,
+                title: processedContent,
                 content: ""
             });
             form.submit();
         } catch (err) {
             $app.logger().error(
-                consts.ERROR_NEW_ITEM + "set item as todo list",
+                consts.ERROR_NEW_ITEM + "set item as todo",
                 "itemRecordId", itemRecord.id,
-                "content", itemRecord.content,
                 "owner", itemRecord.get("owner"),
                 "error", err.toString(),
             );
