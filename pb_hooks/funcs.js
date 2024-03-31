@@ -130,7 +130,7 @@ const funcs = {
         const itemRecord = e.record;
         const content = itemRecord.get("content");
 
-        // Is todo list
+        // Is todo item
         const firstFourChars = content.substring(0, 4);
         if (firstFourChars === ":td:") {
           funcs.setItemAsTodo(itemRecord);
