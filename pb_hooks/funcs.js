@@ -197,8 +197,8 @@ const funcs = {
             const formData = {
                 type: types.ItemTypes.TEXT
             };
-            if (itemRecord.get("content").length <= consts.SHORT_NOTE_LEN)
-                formData.shouldCopyOnClick = true;
+            // if (itemRecord.get("content").length <= consts.SHORT_NOTE_LEN)
+            //     formData.shouldCopyOnClick = true;
 
             form.loadData(formData);
             form.submit();
