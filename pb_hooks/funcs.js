@@ -127,8 +127,7 @@ const funcs = {
     },
 
     processNewItem(e) {
-        const itemRecordId = e.model.id;
-        const itemRecord = $app.dao().findFirstRecordByData("items", "id", itemRecordId);
+        const itemRecord = e.record;
         const content = itemRecord.get("content");
 
         // Is todo list
