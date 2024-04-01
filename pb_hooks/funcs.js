@@ -1,5 +1,7 @@
 /// <reference path="../pb_data/types.d.ts" />
 
+const he = require(`${__hooks}/libs/he.js`);
+
 const types = require(`${__hooks}/types.js`);
 const consts = require(`${__hooks}/consts.js`);
 const utils = require(`${__hooks}/utils.js`);
@@ -246,7 +248,7 @@ const funcs = {
             }
 
             form.loadData({
-                title,
+                title: he.decode(title),
                 content: processedUrl,
                 faviconUrl: processedFaviconUrl
             });
