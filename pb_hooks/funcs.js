@@ -236,6 +236,9 @@ const funcs = {
             }
 
             const title = res.raw.match(/<title.*?>(.*)<\/title>/)[1];
+            const processedTitle = he.decode(title)
+                .substring(0, consts.TITLE_MAX_LEN);
+
             // Known bug: Will fail if href comes before rel
             const favicon = res.raw.match(/<link\s+[^>]*?rel=["'](?:shortcut )?icon["'][^>]*?href=["']([^"']+)["'][^>]*?>/);
 
@@ -248,7 +251,7 @@ const funcs = {
             }
 
             form.loadData({
-                title: he.decode(title),
+                title: processedTitle,
                 content: processedUrl,
                 faviconUrl: processedFaviconUrl
             });
@@ -265,14 +268,14 @@ const funcs = {
         }
     },
 
-    setTitleAndFaviconToItem(itemRecord, title, favicon) {
-        const form = RecordUpsertForm($app, itemRecord);
-        form.loadData({
-            title: title.substring(0, consts.TITLE_MAX_LEN),
-            favicon
-        });
-        form.submit();
-    },
+    // setTitleAndFaviconToItem(itemRecord, title, favicon) {
+    //     const form = RecordUpsertForm($app, itemRecord);
+    //     form.loadData({
+    //         title: title.substring(0, consts.TITLE_MAX_LEN),
+    //         favicon
+    //     });
+    //     form.submit();
+    // },
 };
 
 module.exports = funcs;
