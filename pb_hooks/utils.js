@@ -19,16 +19,15 @@ const utils = {
         return "https://" + urlStr;
     },
 
-    getProtocolAndTld(url) {
+    getProtocolAndDomain(url) {
         const regex = /^(https?:\/\/)?([^\/]+)(\/.*)?$/;
         const match = url.match(regex);
         
         if (match) {
-            const protocol = match[1] ? match[1].slice(0, -3) : 'http'; // Default to http if protocol is not specified
-            const domain = match[2];
-            const tld = domain.split('.').slice(-2).join('.'); // Get the last two parts of the domain
-            
-            return { protocol, tld };
+            const protocol = match[1] ? match[1].replace('://', '') : 'http'; // Extract protocol
+            const domain = match[2]; // Extract domain
+
+            return { protocol, domain };
         } else {
             return null; // Invalid URL
         }
@@ -40,9 +39,9 @@ const utils = {
             return favicon;
         }
 
-        const urlData = utils.getProtocolAndTld(originalProcessedUrl);
+        const urlData = utils.getProtocolAndDomain(originalProcessedUrl);
 
-        return `${urlData.protocol}://${urlData.tld}${favicon}`;
+        return `${urlData.protocol}://${urlData.domain}/${favicon}`;
     },
 };
 
