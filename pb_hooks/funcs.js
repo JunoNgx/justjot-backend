@@ -239,21 +239,12 @@ const funcs = {
             const processedTitle = he.decode(title)
                 .substring(0, consts.TITLE_MAX_LEN);
 
-            // Known bug: Will fail if href comes before rel
-            const favicon = res.raw.match(/<link\s+[^>]*?rel=["'](?:shortcut )?icon["'][^>]*?href=["']([^"']+)["'][^>]*?>/);
-
-            let processedFaviconUrl;
-            if (favicon && favicon[1]) {
-                processedFaviconUrl = utils.tryProcessFaviconUrl(
-                    favicon[1],
-                    processedUrl,
-                );
-            }
+            const faviconUrl = funcs.tryGetFavicon(res.raw, processedUrl);
 
             form.loadData({
                 title: processedTitle,
                 content: processedUrl,
-                faviconUrl: processedFaviconUrl
+                faviconUrl
             });
             form.submit();
 
@@ -266,6 +257,36 @@ const funcs = {
                 "content", itemRecord.get("content")
             );
         }
+    },
+
+    tryGetFavicon(rawHtmlData, originalProcessedUrl) {
+        const urlData = utils.getProtocolAndDomain(originalProcessedUrl);
+
+        // First choice: Scour the raw html to find possible intended 
+        // Known bug: Will fail if href comes before rel
+        const favicon = rawHtmlData.match(/<link\s+[^>]*?rel=["'](?:shortcut )?icon["'][^>]*?href=["']([^"']+)["'][^>]*?>/);
+        if (favicon && favicon[1]) {
+            const processedFaviconUrl = utils.tryProcessFaviconUrl(
+                favicon[1],
+                originalProcessedUrl,
+            );
+
+            return processedFaviconUrl;
+        }
+
+        // Second choice: Try getting the default `/favicon.ico`
+        const defaultUrl = `${urlData.protocol}://${urlData.domain}/favicon.ico`;
+        const res = $http.send({
+            url: defaultUrl,
+            method: "GET",
+            timeout: 2,
+        });
+
+        if (res.statusCode === 200) {
+            return defaultUrl;
+        }
+
+        return "";
     },
 
     // setTitleAndFaviconToItem(itemRecord, title, favicon) {
