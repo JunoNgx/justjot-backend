@@ -18,4 +18,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./pb_hooks/
-        server-dir: justjot/pb_hooks
+        server-dir: justjot/pb_hooks/
