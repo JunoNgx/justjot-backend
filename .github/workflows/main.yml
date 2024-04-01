@@ -12,10 +12,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Upload FTP
-      uses: genietim/ftp-action
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         host: ${{ secrets.FTP_SERVER }}
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        localDir: "pb_hooks"
-        remoteDir: "justjot/pb_hooks"
+        local-dir: "pb_hooks"
+        server-dir: "justjot/pb_hooks"
