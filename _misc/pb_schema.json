@@ -73,7 +73,7 @@
       "manageRule": null,
       "minPasswordLength": 8,
       "onlyEmailDomains": null,
-      "onlyVerified": true,
+      "onlyVerified": false,
       "requireEmail": true
     }
   },
@@ -124,7 +124,7 @@
         "options": {
           "min": 2,
           "max": 50,
-          "pattern": ""
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
         }
       },
       {
@@ -136,9 +136,9 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "min": 0,
+          "min": null,
           "max": null,
-          "noDecimal": true
+          "noDecimal": false
         }
       }
     ],
@@ -198,7 +198,7 @@
         "unique": false,
         "options": {
           "min": null,
-          "max": 50,
+          "max": 200,
           "pattern": ""
         }
       },
@@ -229,14 +229,24 @@
           "values": [
             "text",
             "link",
-            "todoList"
+            "todo"
           ]
         }
       },
       {
         "system": false,
         "id": "k2ut3j4t",
-        "name": "shouldCopyUponClick",
+        "name": "shouldCopyOnClick",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "twnv1hmx",
+        "name": "isTodoDone",
         "type": "bool",
         "required": false,
         "presentable": false,
@@ -259,8 +269,8 @@
       }
     ],
     "indexes": [],
-    "listRule": "",
-    "viewRule": "",
+    "listRule": "@request.auth.id = owner.id",
+    "viewRule": "@request.auth.id = owner.id",
     "createRule": "@request.auth.id = owner.id",
     "updateRule": "@request.auth.id = owner.id",
     "deleteRule": "@request.auth.id = owner.id",
