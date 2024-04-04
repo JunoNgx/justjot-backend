@@ -14,7 +14,7 @@ routerAdd("PATCH", "/refetch/:ownerId/:itemId", c => {
         const isValidUrl = utils.isValidUrl(itemRecord.get("content"));
         if (isValidUrl) {
             funcs.tryGetTitleAndFavicon(itemRecord);
-            return;
+            return c.json(200, itemRecord);
         }
 
         $app.logger().warn(
