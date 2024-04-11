@@ -178,12 +178,15 @@ const funcs = {
         }
     },
 
-    setItemAsLink(itemRecord) {
+    setItemAsLink(itemRecord, content) {
         try {
             const form = RecordUpsertForm($app, itemRecord);
-            form.loadData({
+            const formData = {
                 type: types.ItemTypes.LINK,
-            });
+            };
+            if (content) formData.content = content;
+
+            form.loadData(formData);
             form.submit();
         } catch (err) {
             $app.logger().error(
@@ -231,10 +234,7 @@ const funcs = {
             });
 
             if (res.statusCode !== 200) {
-                form.loadData({
-                    content: processedUrl,
-                });
-                form.submit();
+                funcs.setItemAsLink(itemRecord, processedUrl);
                 return;
             }
 
