@@ -231,7 +231,7 @@ const funcs = {
                 url: processedUrl,
                 method: "GET",
                 headers: {"Content-Type": "text/html; charset=utf-8"},
-                timeout: 2,
+                timeout: 10,
             });
 
             if (res.statusCode !== 200) {
