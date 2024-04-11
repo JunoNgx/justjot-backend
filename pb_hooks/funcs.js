@@ -146,7 +146,6 @@ const funcs = {
         // Is link
         const isValidUrl = utils.isValidUrl(content);
         if (isValidUrl) {
-            funcs.setItemAsLink(itemRecord);
             funcs.tryGetTitleAndFavicon(itemRecord);
             return;
         }
@@ -248,11 +247,15 @@ const funcs = {
             form.loadData({
                 title: processedTitle,
                 content: processedUrl,
-                faviconUrl
+                faviconUrl,
+                type: types.ItemTypes.LINK
             });
             form.submit();
 
         } catch (err) {
+            // Even if host doesn't exist, item still needs to be typed
+            funcs.setItemAsLink(itemRecord);
+
             console.log(err)
             $app.logger().warn(
                 "Failed to fetch title and favicon",
