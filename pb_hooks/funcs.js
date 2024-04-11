@@ -130,6 +130,10 @@ const funcs = {
 
     processNewItem(e) {
         const itemRecord = e.record;
+        if (itemRecord.get("type")) {
+            return;
+        }
+
         const content = itemRecord.get("content");
 
         // Is todo item
