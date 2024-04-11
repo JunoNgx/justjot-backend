@@ -230,6 +230,7 @@ const funcs = {
             const res = $http.send({
                 url: processedUrl,
                 method: "GET",
+                headers: {"Content-Type": "text/html; charset=utf-8"},
                 timeout: 2,
             });
 
