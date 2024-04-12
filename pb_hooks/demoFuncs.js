@@ -38,8 +38,12 @@ const demoFuncs = {
     },
 
     createCollections(demoUserId) {
-        recordUtils.createCollection(demoUserId, "Personal", "personal");
-        recordUtils.createCollection(demoUserId, "Work", "work");
+        const personalCollId = recordUtils.createCollection(
+            demoUserId, "Personal", "personal");
+        const workCollId = recordUtils.createCollection(
+            demoUserId, "Work", "work");
+
+        console.log("Demo collection created", personalCollId, workCollId);
     },
 
     createItems() {
