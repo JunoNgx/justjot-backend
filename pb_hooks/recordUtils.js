@@ -7,6 +7,7 @@ const recordUtils = {
      * @param {string} userId 
      * @param {string} collName 
      * @param {string} collSlug 
+     * @return {string} The id of the created Collection record
      */
     createCollection(userId, collName, collSlug) {
         try {
@@ -21,12 +22,16 @@ const recordUtils = {
                 sortOrder: 0,
             });
             form.submit();
+
+            return collectionRecord.getId();
         } catch (err) {
             $app.logger().error(
                 "Error creating Collection",
                 "userId", userId,
                 "error", err.toString(),
             );
+
+            return "";
         }
     },
 
