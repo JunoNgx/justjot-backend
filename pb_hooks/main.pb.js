@@ -52,3 +52,9 @@ onRecordBeforeCreateRequest(async (e) => {
 
     funcs.processNewItem(e);
 }, types.DbTables.ITEMS);
+
+cronAdd("resetDemoData", "*/1 * * * *", () => {
+    const demoFuncs = require(`${__hooks}/demoFuncs.js`);
+
+    demoFuncs.resetDemoData();
+});
