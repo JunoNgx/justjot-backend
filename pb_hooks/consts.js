@@ -3,6 +3,7 @@ const consts = {
     TITLE_MAX_LEN: 200,
     ERROR_NEW_USER: "[ERROR: handle new user] ",
     ERROR_NEW_ITEM: "[ERROR: handle new item] ",
+    DEMO_USERNAME: "JayDoeTest",
 }
 
 module.exports = consts;
