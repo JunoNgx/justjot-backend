@@ -6,6 +6,8 @@ const types = require("./types.js");
 const consts = require("./consts.js");
 const utils = require("./utils.js");
 
+const recordUtils = require("./recordUtils.js");
+
 const funcs = {
     sendUserEmailVerification(e) {
         const userId = e.record.getId();
@@ -14,123 +16,52 @@ const funcs = {
     },
 
     createInitialItemsForNewUser(e) {
+        const userId = e.record.getId();
+
         try {
-            const userId = e.record.getId();
-            const collectionId = funcs.createFirstCollectionForNewUser(userId);
-            const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
+            const collectionId = recordUtils.createCollection(
+                userId, "Logbook", "logbook");
     
-            funcs.createLinkForNewUser(userId, collectionId, itemsCollection);
-            funcs.createColourNoteForNewUser(userId, collectionId, itemsCollection);
-            funcs.createShortTextForNewUser(userId, collectionId, itemsCollection);
-            funcs.createLongTextForNewUser(userId, collectionId, itemsCollection);
+            recordUtils.createLinkItem(
+                userId,
+                collectionId,
+                "Internet for people, not profit — Mozilla Global",
+                "https://mozilla.org",
+                "https://www.mozilla.org/media/img/favicons/mozilla/favicon-196x196.2af054fea211.png",
+            );
+
+            recordUtils.createTextItem(
+                userId,
+                collectionId,
+                "Mellow yellow",
+                "#F8DE7E",
+                true
+            );
+
+            recordUtils.createTextItem(
+                userId,
+                collectionId,
+                "Click here to copy",
+                "Something you copy and use very frequently",
+                true
+            );
+
+            recordUtils.createTextItem(
+                userId,
+                collectionId,
+                "A typical text note",
+                "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way—in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.",
+            );
+
+            recordUtils.createTodoItem(
+                userId,
+                collectionId,
+                "Learn to use JustJot"
+            );
+
         } catch (err) {
             $app.logger().error(
                 "Error creating data for new user",
-                "error", err.toString(),
-                "userId", userId,
-                "collectionId", collectionId,
-            );
-        }
-    },
-
-    createFirstCollectionForNewUser(userId) {
-        try {
-            const itemCollectionsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.COLLECTIONS);
-            const collectionRecord = new Record(itemCollectionsCollection);
-            const form = new RecordUpsertForm($app, collectionRecord);
-
-            form.loadData({
-                owner: userId,
-                name: "First Collection",
-                slug: "first-collection",
-                sortOrder: 0,
-            });
-            form.submit();
-
-            return collectionRecord.id;
-        } catch (err) {
-            $app.logger().error(
-                consts.ERROR_NEW_USER + "create first collection",
-                "userId", userId,
-                "error", err.toString(),
-            );
-        }
-    },
-
-    createLinkForNewUser(userId, collectionId, itemsCollection) {
-        try {
-            const linkItemRecord = new Record(itemsCollection);
-            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
-            linkItemForm.loadData({
-                owner: userId,
-                collection: collectionId,
-                content: "https://www.mozilla.org/",
-                // title to be processed by `onRecordAfterCreateHook`
-            });
-            linkItemForm.submit();
-        } catch (err) {
-            $app.logger().error(
-                consts.ERROR_NEW_USER + "create link",
-                "userId", userId,
-                "error", err.toString(),
-            );
-        }
-    },
-
-    createColourNoteForNewUser(userId, collectionId, itemsCollection) {
-        try {
-            const colourItemRecord = new Record(itemsCollection);
-            const colourItemForm = new RecordUpsertForm($app, colourItemRecord);
-            colourItemForm.loadData({
-                owner: userId,
-                collection: collectionId,
-                title: "Medium Aquamarine",
-                content: "#66CDAA",
-            });
-            colourItemForm.submit();
-        } catch (err) {
-            $app.logger().error(
-                consts.ERROR_NEW_USER + "create colour note",
-                "userId", userId,
-                "error", err.toString(),
-            );
-        }
-    },
-
-    createShortTextForNewUser(userId, collectionId, itemsCollection) {
-        try {
-            const shortTextItemRecord = new Record(itemsCollection);
-            const shortTextItemForm = new RecordUpsertForm($app, shortTextItemRecord);
-            shortTextItemForm.loadData({
-                owner: userId,
-                collection: collectionId,
-                title: "Short text note",
-                content: "Click here to copy",
-            });
-            shortTextItemForm.submit();
-        } catch (err) {
-            $app.logger().error(
-                consts.ERROR_NEW_USER + "create short text",
-                "userId", userId,
-                "error", err.toString(),
-            );
-        }
-    },
-
-    createLongTextForNewUser(userId, collectionId, itemsCollection) {
-        try {
-            const longTextItemRecord = new Record(itemsCollection);
-            const longTextItemForm = new RecordUpsertForm($app, longTextItemRecord);
-            longTextItemForm.loadData({
-                owner: userId,
-                collection: collectionId,
-                title: "Long text note",
-                content: "Click here to open the editor. Text notes with more than 50 characters will have their default action automatically set to open the editor. You can manually configure this note item from the context menu (right click on a mouse; long press from a touchscreen, or Cmd/Ctrl + M from a keyboard)."
-            });
-            longTextItemForm.submit();
-        } catch (err) {
-            $app.logger().error(
-                consts.ERROR_NEW_USER + "create long text",
                 "userId", userId,
                 "error", err.toString(),
             );
