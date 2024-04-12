@@ -45,10 +45,6 @@ const demoFuncs = {
 
         console.log("Demo collection created", personalCollId, workCollId);
     },
-
-    createItems() {
-
-    },
 };
 
 module.exports = demoFuncs;
