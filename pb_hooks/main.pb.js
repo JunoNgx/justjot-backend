@@ -37,7 +37,7 @@ routerAdd("PATCH", "/refetch/:ownerId/:itemId", c => {
 onRecordAfterCreateRequest((e) => {
     const funcs = require(`${__hooks}/funcs.js`);
 
-    // funcs.sendUserEmailVerification(e);
+    funcs.sendUserEmailVerification(e);
     funcs.createInitialItemsForNewUser(e);
 }, types.DbTables.USERS);
 
