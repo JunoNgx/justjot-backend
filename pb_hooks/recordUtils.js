@@ -62,6 +62,28 @@ const recordUtils = {
             );
         }
     },
+
+    createTodoItem(userId, collectionId, taskName, isTodoDone = false) {
+        try {
+            const linkItemRecord = new Record(itemsCollection);
+            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
+            linkItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                title: taskName,
+                isTodoDone,
+                type: types.ItemTypes.TODO,
+            });
+            linkItemForm.submit();
+        } catch (err) {
+            $app.logger().error(
+                "Error creating todo",
+                "userId", userId,
+                "collectionId", collectionId,
+                "error", err.toString(),
+            );
+        }
+    },
 };
 
 module.exports = recordUtils;
