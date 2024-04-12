@@ -1,3 +1,5 @@
+const types = require("./types");
+
 const recordUtils = {
 
     /**
@@ -22,6 +24,36 @@ const recordUtils = {
         } catch (err) {
             $app.logger().error(
                 "Error creating Collection",
+                "userId", userId,
+                "error", err.toString(),
+            );
+        }
+    },
+
+    /**
+     * Create an Item marked as link
+     * @param {string} userId 
+     * @param {string} collectionId 
+     * @param {string} title 
+     * @param {string} content 
+     * @param {string} faviconUrl 
+     */
+    createLinkItem(userId, collectionId, title, content, faviconUrl) {
+        try {
+            const linkItemRecord = new Record(itemsCollection);
+            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
+            linkItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                title,
+                content,
+                faviconUrl,
+                type: types.ItemTypes.LINK,
+            });
+            linkItemForm.submit();
+        } catch (err) {
+            $app.logger().error(
+                "Error creating link",
                 "userId", userId,
                 "error", err.toString(),
             );
