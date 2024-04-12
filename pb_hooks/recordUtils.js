@@ -37,8 +37,9 @@ const recordUtils = {
      * @param {string} title 
      * @param {string} content 
      * @param {string} faviconUrl 
+     * @param {boolean} shouldCopyOnClick
      */
-    createLinkItem(userId, collectionId, title, content, faviconUrl) {
+    createLinkItem(userId, collectionId, title, content, faviconUrl, shouldCopyOnClick = false) {
         try {
             const linkItemRecord = new Record(itemsCollection);
             const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
@@ -48,6 +49,7 @@ const recordUtils = {
                 title,
                 content,
                 faviconUrl,
+                shouldCopyOnClick,
                 type: types.ItemTypes.LINK,
             });
             linkItemForm.submit();
