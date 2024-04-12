@@ -99,6 +99,26 @@ const demoFuncs = {
             const workCollId = recordUtils.createCollection(
                 demoUserId, "Work", "work");
 
+            recordUtils.createLinkItem(
+                demoUserId,
+                workCollId,
+                "Keyboard code reference",
+                "https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values",
+                "https://developer.mozilla.org/favicon-48x48.cbbd161b.png",
+            );
+            recordUtils.createTextItem(
+                demoUserId,
+                workCollId,
+                "Hexcode validator func",
+                "export const isValidHexColourCode = (str: string): boolean => {\r\n    const hexColourCodeRegEx = \/(^#[A-Fa-f0-9]{6}$)\/;\r\n    return hexColourCodeRegEx.test(str);\r\n}",
+                true,
+            );
+            recordUtils.createTodoItem(
+                demoUserId,
+                workCollId,
+                "Submit PR to fix the keyboard shortcut",
+            );
+
         } catch (err) {
             $app.logger().error(
                 "Error recreating demo data",
