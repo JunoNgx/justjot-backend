@@ -91,6 +91,37 @@ const recordUtils = {
             );
         }
     },
+
+    /**
+     * Create an Item marked as Text
+     * @param {string} userId 
+     * @param {string} collectionId 
+     * @param {string} title 
+     * @param {string} content 
+     * @param {boolean} shouldCopyOnClick 
+     */
+    createTextItem(userId, collectionId, title, content, shouldCopyOnClick = false) {
+        try {
+            const linkItemRecord = new Record(itemsCollection);
+            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
+            linkItemForm.loadData({
+                owner: userId,
+                collection: collectionId,
+                title,
+                content,
+                shouldCopyOnClick,
+                type: types.ItemTypes.TEXT,
+            });
+            linkItemForm.submit();
+        } catch (err) {
+            $app.logger().error(
+                "Error creating todo",
+                "userId", userId,
+                "collectionId", collectionId,
+                "error", err.toString(),
+            );
+        }
+    },
 };
 
 module.exports = recordUtils;
