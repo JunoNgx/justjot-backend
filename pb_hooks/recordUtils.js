@@ -55,6 +55,7 @@ const recordUtils = {
             $app.logger().error(
                 "Error creating link",
                 "userId", userId,
+                "collectionId", collectionId,
                 "error", err.toString(),
             );
         }
