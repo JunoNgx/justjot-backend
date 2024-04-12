@@ -35,6 +35,8 @@ const demoFuncs = {
             `owner=${demoUserId}`,
         );
 
+        if (!itemCollections.length) return;
+
         for (const coll of itemCollections) {
             $app.dao().deleteRecord(coll);
         };
