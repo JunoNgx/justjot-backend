@@ -63,6 +63,13 @@ const recordUtils = {
         }
     },
 
+    /**
+     * Create an Item marked as Todo
+     * @param {string} userId 
+     * @param {string} collectionId 
+     * @param {string} taskName 
+     * @param {boolean} isTodoDone 
+     */
     createTodoItem(userId, collectionId, taskName, isTodoDone = false) {
         try {
             const linkItemRecord = new Record(itemsCollection);
