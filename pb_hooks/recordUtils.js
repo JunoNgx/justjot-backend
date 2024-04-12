@@ -46,6 +46,7 @@ const recordUtils = {
      */
     createLinkItem(userId, collectionId, title, content, faviconUrl, shouldCopyOnClick = false) {
         try {
+            const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
             const linkItemRecord = new Record(itemsCollection);
             const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
             linkItemForm.loadData({
@@ -77,6 +78,7 @@ const recordUtils = {
      */
     createTodoItem(userId, collectionId, taskName, isTodoDone = false) {
         try {
+            const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
             const todoItemRecord = new Record(itemsCollection);
             const todoItemForm = new RecordUpsertForm($app, todoItemRecord);
             todoItemForm.loadData({
@@ -107,6 +109,7 @@ const recordUtils = {
      */
     createTextItem(userId, collectionId, title, content, shouldCopyOnClick = false) {
         try {
+            const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
             const textItemRecord = new Record(itemsCollection);
             const textItemForm = new RecordUpsertForm($app, textItemRecord);
             textItemForm.loadData({
