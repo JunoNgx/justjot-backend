@@ -1,7 +1,7 @@
 /// <reference path="../pb_data/types.d.ts" />
 
-const types = require(`${__hooks}/types.js`);
-const consts = require(`${__hooks}/consts.js`);
+const types = require("./types.js");
+const consts = require("./consts.js");
 const recordUtils = require("./recordUtils.js");
 
 const demoFuncs = {
