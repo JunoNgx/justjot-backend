@@ -77,16 +77,16 @@ const recordUtils = {
      */
     createTodoItem(userId, collectionId, taskName, isTodoDone = false) {
         try {
-            const linkItemRecord = new Record(itemsCollection);
-            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
-            linkItemForm.loadData({
+            const todoItemRecord = new Record(itemsCollection);
+            const todoItemForm = new RecordUpsertForm($app, todoItemRecord);
+            todoItemForm.loadData({
                 owner: userId,
                 collection: collectionId,
                 title: taskName,
                 isTodoDone,
                 type: types.ItemTypes.TODO,
             });
-            linkItemForm.submit();
+            todoItemForm.submit();
         } catch (err) {
             $app.logger().error(
                 "Error creating todo",
@@ -107,9 +107,9 @@ const recordUtils = {
      */
     createTextItem(userId, collectionId, title, content, shouldCopyOnClick = false) {
         try {
-            const linkItemRecord = new Record(itemsCollection);
-            const linkItemForm = new RecordUpsertForm($app, linkItemRecord);
-            linkItemForm.loadData({
+            const textItemRecord = new Record(itemsCollection);
+            const textItemForm = new RecordUpsertForm($app, textItemRecord);
+            textItemForm.loadData({
                 owner: userId,
                 collection: collectionId,
                 title,
@@ -117,7 +117,7 @@ const recordUtils = {
                 shouldCopyOnClick,
                 type: types.ItemTypes.TEXT,
             });
-            linkItemForm.submit();
+            textItemForm.submit();
         } catch (err) {
             $app.logger().error(
                 "Error creating todo",
