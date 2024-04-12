@@ -1,10 +1,10 @@
 /// <reference path="../pb_data/types.d.ts" />
 
-const he = require(`${__hooks}/libs/he.js`);
+const he = require("./libs/he.js");
 
-const types = require(`${__hooks}/types.js`);
-const consts = require(`${__hooks}/consts.js`);
-const utils = require(`${__hooks}/utils.js`);
+const types = require("./types.js");
+const consts = require("./consts.js");
+const utils = require("./utils.js");
 
 const funcs = {
     sendUserEmailVerification(e) {
