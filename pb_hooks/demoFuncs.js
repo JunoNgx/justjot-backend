@@ -56,6 +56,46 @@ const demoFuncs = {
 
             const personalCollId = recordUtils.createCollection(
                 demoUserId, "Personal", "personal");
+
+            recordUtils.createLinkItem(
+                demoUserId,
+                personalCollId,
+                "xkcd",
+                "https://xkcd.com",
+                "https://xkcd.com/s/919f27.ico",
+            );
+            recordUtils.createTextItem(
+                demoUserId,
+                personalCollId,
+                "Pretty colour: Munsell",
+                "#0087BD",
+                true
+            );
+            recordUtils.createTextItem(
+                demoUserId,
+                personalCollId,
+                "Forum signature",
+                "In Light we Walk.",
+                true
+            );
+            recordUtils.createTodoItem(
+                demoUserId,
+                personalCollId,
+                "Buy bacon",
+                true
+            );
+            recordUtils.createTodoItem(
+                demoUserId,
+                personalCollId,
+                "Try Quadrilateral Cowboy"
+            );
+            recordUtils.createTextItem(
+                demoUserId,
+                personalCollId,
+                "Carian Knight build",
+                "Lvl: 150\nAstrologer\n\nVIG 55\nMIN 36\nEND 20\nSTR 10\nDEX 12\nINT 80\nFAI 7\nARC 9"
+            );
+
             const workCollId = recordUtils.createCollection(
                 demoUserId, "Work", "work");
 
