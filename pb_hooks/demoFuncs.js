@@ -33,7 +33,7 @@ const demoFuncs = {
         try {
             const itemCollections = $app.dao().findRecordsByFilter(
                 types.DbTables.COLLECTIONS,
-                `owner=${demoUserId}`,
+                `owner="${demoUserId}"`,
             );
     
             if (!itemCollections.length) return;
