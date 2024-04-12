@@ -30,16 +30,24 @@ const demoFuncs = {
     deleteExistingData(demoUserId) {
         console.log("Execute: deleteExistingData")
 
-        const itemCollections = $app.dao().findRecordsByFilter(
-            types.DbTables.COLLECTIONS,
-            `owner=${demoUserId}`,
-        );
-
-        if (!itemCollections.length) return;
-
-        for (const coll of itemCollections) {
-            $app.dao().deleteRecord(coll);
-        };
+        try {
+            const itemCollections = $app.dao().findRecordsByFilter(
+                types.DbTables.COLLECTIONS,
+                `owner=${demoUserId}`,
+            );
+    
+            if (!itemCollections.length) return;
+    
+            for (const coll of itemCollections) {
+                $app.dao().deleteRecord(coll);
+            };
+        } catch (err) {
+            $app.logger().error(
+                "Error deleting demo data",
+                "error", err.toString(),
+            );
+            console.log(err)
+        }
     },
 
     recreateData(demoUserId) {
