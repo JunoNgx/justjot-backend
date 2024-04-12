@@ -296,15 +296,6 @@ const funcs = {
 
         return "";
     },
-
-    // setTitleAndFaviconToItem(itemRecord, title, favicon) {
-    //     const form = RecordUpsertForm($app, itemRecord);
-    //     form.loadData({
-    //         title: title.substring(0, consts.TITLE_MAX_LEN),
-    //         favicon
-    //     });
-    //     form.submit();
-    // },
 };
 
 module.exports = funcs;
