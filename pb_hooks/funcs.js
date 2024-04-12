@@ -14,14 +14,23 @@ const funcs = {
     },
 
     createInitialItemsForNewUser(e) {
-        const userId = e.record.getId();
-        const collectionId = funcs.createFirstCollectionForNewUser(userId);
-        const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
-
-        funcs.createLinkForNewUser(userId, collectionId, itemsCollection);
-        funcs.createColourNoteForNewUser(userId, collectionId, itemsCollection);
-        funcs.createShortTextForNewUser(userId, collectionId, itemsCollection);
-        funcs.createLongTextForNewUser(userId, collectionId, itemsCollection);
+        try {
+            const userId = e.record.getId();
+            const collectionId = funcs.createFirstCollectionForNewUser(userId);
+            const itemsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.ITEMS);
+    
+            funcs.createLinkForNewUser(userId, collectionId, itemsCollection);
+            funcs.createColourNoteForNewUser(userId, collectionId, itemsCollection);
+            funcs.createShortTextForNewUser(userId, collectionId, itemsCollection);
+            funcs.createLongTextForNewUser(userId, collectionId, itemsCollection);
+        } catch (err) {
+            $app.logger().error(
+                "Error creating data for new user",
+                "error", err.toString(),
+                "userId", userId,
+                "collectionId", collectionId,
+            );
+        }
     },
 
     createFirstCollectionForNewUser(userId) {
