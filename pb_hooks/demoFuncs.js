@@ -6,6 +6,7 @@ const recordUtils = require("./recordUtils.js");
 
 const demoFuncs = {
     resetDemoData() {
+        console.log("Execute: resetDemoData")
         const demoUser = $app.dao().findAuthRecordByUsername(
             types.DbTables.USERS,
             consts.DEMO_USERNAME
@@ -14,8 +15,8 @@ const demoFuncs = {
         demoFuncs.resetDisplayName(demoUser);
 
         const demoUserId = demoUser.getId();
-        demoFuncs.deleteCollections(demoUserId);
-        demoFuncs.createCollections(demoUserId);
+        demoFuncs.deleteExistingData(demoUserId);
+        demoFuncs.recreateData(demoUserId);
     },
 
     resetDisplayName(demoUser) {
@@ -26,7 +27,9 @@ const demoFuncs = {
         form.submit();
     },
 
-    deleteCollections(demoUserId) {
+    deleteExistingData(demoUserId) {
+        console.log("Execute: deleteExistingData")
+
         const itemCollections = $app.dao().findRecordsByFilter(
             types.DbTables.COLLECTIONS,
             `owner=${demoUserId}`,
@@ -37,7 +40,9 @@ const demoFuncs = {
         };
     },
 
-    createCollections(demoUserId) {
+    recreateData(demoUserId) {
+        console.log("Execute: recreateData")
+
         const personalCollId = recordUtils.createCollection(
             demoUserId, "Personal", "personal");
         const workCollId = recordUtils.createCollection(
