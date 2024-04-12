@@ -51,14 +51,21 @@ const demoFuncs = {
     },
 
     recreateData(demoUserId) {
-        console.log("Execute: recreateData")
+        try {
+            console.log("Execute: recreateData")
 
-        const personalCollId = recordUtils.createCollection(
-            demoUserId, "Personal", "personal");
-        const workCollId = recordUtils.createCollection(
-            demoUserId, "Work", "work");
+            const personalCollId = recordUtils.createCollection(
+                demoUserId, "Personal", "personal");
+            const workCollId = recordUtils.createCollection(
+                demoUserId, "Work", "work");
 
-        console.log("Demo collection created", personalCollId, workCollId);
+        } catch (err) {
+            $app.logger().error(
+                "Error recreating demo data",
+                "error", err.toString(),
+            );
+            console.log(err)
+        }
     },
 };
 
