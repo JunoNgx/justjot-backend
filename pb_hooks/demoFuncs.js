@@ -21,8 +21,12 @@ const demoFuncs = {
     resetTestAccount(demoUser) {
         try {
             const form = new RecordUpsertForm($app, demoUser);
+            form.setFullManageAccess(true);
             form.loadData({
-                displayName: "Jay Doe",
+                email: consts.TEST_ACC_EMAIL,
+                displayName: consts.TEST_ACC_USERNAME,
+                password: consts.TEST_ACC_PASSWORD,
+                passwordConfirm: consts.TEST_ACC_PASSWORD,
             });
             form.submit();
         } catch (err) {
