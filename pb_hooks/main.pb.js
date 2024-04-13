@@ -27,6 +27,12 @@ onRecordBeforeCreateRequest(async (e) => {
     funcs.classifyNewItem(e);
 }, types.DbTables.ITEMS);
 
+onRecordBeforeRequestEmailChangeRequest((e) => {
+    const funcs = require(`${__hooks}/funcs.js`);
+
+    funcs.tryBlockAttemptToChangeTestAccEmail(e);
+}, types.DbTables.USERS);
+
 cronAdd("resetDemoData", "0 */6 * * *", () => {
     const demoFuncs = require(`${__hooks}/demoFuncs.js`);
 

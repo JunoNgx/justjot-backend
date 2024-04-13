@@ -263,6 +263,22 @@ const funcs = {
 
         return "";
     },
+
+    /**
+     * // Intervene if attempt to vandalise the test account is detected
+     * @param { core.RecordRequestEmailChangeEvent } e 
+     */
+    tryBlockAttemptToChangeTestAccEmail(e) {
+        const record = e.record;
+        const username = record?.get("username");
+        const isTestAccount = username === consts.DEMO_USERNAME;
+        if (isTestAccount) {
+            e.httpContext.json(
+                401,
+                { message: "Not allowed to modify test account" }
+            );
+        };
+    },
 };
 
 module.exports = funcs;
