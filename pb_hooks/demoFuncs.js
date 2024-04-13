@@ -8,7 +8,7 @@ const demoFuncs = {
     resetDemoData() {
         const demoUser = $app.dao().findAuthRecordByUsername(
             types.DbTables.USERS,
-            consts.DEMO_USERNAME
+            consts.TEST_ACC_USERNAME
         );
 
         demoFuncs.resetTestAccount(demoUser);

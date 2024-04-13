@@ -271,7 +271,7 @@ const funcs = {
     tryBlockAttemptToChangeTestAccEmail(e) {
         const record = e.record;
         const username = record?.get("username");
-        const isTestAccount = username === consts.DEMO_USERNAME;
+        const isTestAccount = username === consts.TEST_ACC_USERNAME;
         if (isTestAccount) {
             e.httpContext.json(
                 401,
