@@ -3,35 +3,9 @@
 const types = require(`${__hooks}/types.js`);
 
 routerAdd("PATCH", "/refetch/:ownerId/:itemId", c => {
-    const types = require(`${__hooks}/types.js`);
-    const utils = require(`${__hooks}/utils.js`);
-    const funcs = require(`${__hooks}/funcs.js`);
+    const refetchFuncs = require(`${__hooks}/refetchFuncs.js`);
 
-    const itemId = c.pathParam("itemId");
-
-    try {
-        const itemRecord = $app.dao().findRecordById(types.DbTables.ITEMS, itemId);
-        const isValidUrl = utils.isValidUrl(itemRecord.get("content"));
-        if (isValidUrl) {
-            funcs.tryGetTitleAndFavicon(itemRecord);
-            return c.json(200, itemRecord);
-        }
-
-        $app.logger().warn(
-            "Was requested to refetch, but not a valid url",
-            "itemId", itemId,
-            "content", itemRecord.content,
-        );
-        return;
-
-    } catch (err) {
-        $app.logger().error(
-            "Error processing request to refetch hyperlink",
-            "err", err,
-            "itemId", itemId,
-            "error", err,
-        );
-    }
+    refetchFuncs.handleRefetchRequest(c);
 }, $apis.requireAdminOrOwnerAuth("ownerId"));
 
 onRecordAfterCreateRequest((e) => {
