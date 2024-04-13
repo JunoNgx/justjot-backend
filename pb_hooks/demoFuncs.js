@@ -11,19 +11,27 @@ const demoFuncs = {
             consts.DEMO_USERNAME
         );
 
-        demoFuncs.resetDisplayName(demoUser);
+        demoFuncs.resetTestAccount(demoUser);
 
         const demoUserId = demoUser.getId();
         demoFuncs.deleteExistingData(demoUserId);
         demoFuncs.recreateData(demoUserId);
     },
 
-    resetDisplayName(demoUser) {
-        const form = new RecordUpsertForm($app, demoUser);
-        form.loadData({
-            displayName: "Jay Doe"
-        });
-        form.submit();
+    resetTestAccount(demoUser) {
+        try {
+            const form = new RecordUpsertForm($app, demoUser);
+            form.loadData({
+                displayName: "Jay Doe",
+            });
+            form.submit();
+        } catch (err) {
+            $app.logger().error(
+                "Error resetting test account",
+                "error", err.toString(),
+            );
+            console.log(err)
+        }
     },
 
     deleteExistingData(demoUserId) {
