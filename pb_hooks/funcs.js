@@ -112,7 +112,7 @@ const funcs = {
             const processedContent = submittedContent.
                 substring(4, submittedContent.length).trim();
 
-            const form = RecordUpsertForm($app, itemRecord);
+            const form = new RecordUpsertForm($app, itemRecord);
             // Use processed submitted content as title
             form.loadData({
                 type: types.ItemTypes.TODO,
@@ -136,7 +136,7 @@ const funcs = {
      */
     setItemAsLink(itemRecord, content) {
         try {
-            const form = RecordUpsertForm($app, itemRecord);
+            const form = new RecordUpsertForm($app, itemRecord);
             const formData = {
                 type: types.ItemTypes.LINK,
             };
@@ -160,7 +160,7 @@ const funcs = {
      */
     setItemAsText(itemRecord) {
         try {
-            const form = RecordUpsertForm($app, itemRecord);
+            const form = new RecordUpsertForm($app, itemRecord);
             const formData = {
                 type: types.ItemTypes.TEXT
             };
