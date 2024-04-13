@@ -7,11 +7,10 @@ const types = require("./types.js");
 const refetchFuncs = {
 
     /**
-     * 
+     * Handle a request to refetch meta-data for an existing link
      * @param {echo.Context} c 
      */
     handleRefetchRequest(c) {
-        console.log("handleRefetchRequest")
         const itemId = c.pathParam("itemId");
 
         try {
@@ -35,7 +34,6 @@ const refetchFuncs = {
                 "itemId", itemId,
                 "error", err,
             );
-            console.log(err)
         }
     },
 };
