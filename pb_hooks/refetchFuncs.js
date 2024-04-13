@@ -26,7 +26,7 @@ const refetchFuncs = {
                 "itemId", itemId,
                 "content", itemRecord.get("content"),
             );
-            return;
+            return c.json(204, itemRecord);
     
         } catch (err) {
             $app.logger().error(
