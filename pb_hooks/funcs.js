@@ -77,7 +77,7 @@ const funcs = {
      /**
      * @param { core.RecordCreateEvent } e 
      */
-    processNewItem(e) {
+    classifyNewItem(e) {
         const itemRecord = e.record;
         if (itemRecord.get("type")) {
             return;

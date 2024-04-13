@@ -50,7 +50,7 @@ onRecordAfterCreateRequest((e) => {
 onRecordBeforeCreateRequest(async (e) => {
     const funcs = require(`${__hooks}/funcs.js`);
 
-    funcs.processNewItem(e);
+    funcs.classifyNewItem(e);
 }, types.DbTables.ITEMS);
 
 cronAdd("resetDemoData", "0 */6 * * *", () => {
