@@ -9,12 +9,18 @@ const utils = require("./utils.js");
 const recordUtils = require("./recordUtils.js");
 
 const funcs = {
+    /**
+     * @param { core.RecordCreateEvent } e 
+     */
     sendUserEmailVerification(e) {
         const userId = e.record.getId();
         const userRecord = $app.dao().findRecordById(types.DbTables.USERS, userId);
         $mails.sendRecordVerification($app, userRecord);
     },
 
+    /**
+     * @param { core.RecordCreateEvent } e 
+     */
     createInitialItemsForNewUser(e) {
         const userId = e.record.getId();
 
@@ -68,6 +74,9 @@ const funcs = {
         }
     },
 
+     /**
+     * @param { core.RecordCreateEvent } e 
+     */
     processNewItem(e) {
         const itemRecord = e.record;
         if (itemRecord.get("type")) {
@@ -94,6 +103,9 @@ const funcs = {
         funcs.setItemAsText(itemRecord);
     },
 
+     /**
+     * @param { models.Record } itemRecord 
+     */
     setItemAsTodo(itemRecord) {
         try {
             const submittedContent = itemRecord.get("content");
@@ -118,6 +130,10 @@ const funcs = {
         }
     },
 
+    /**
+     * @param { models.Record } itemRecord 
+     * @param { string } content
+     */
     setItemAsLink(itemRecord, content) {
         try {
             const form = RecordUpsertForm($app, itemRecord);
@@ -139,6 +155,9 @@ const funcs = {
         }
     },
 
+    /**
+     * @param { models.Record } itemRecord 
+     */
     setItemAsText(itemRecord) {
         try {
             const form = RecordUpsertForm($app, itemRecord);
@@ -161,8 +180,11 @@ const funcs = {
         }
     },
 
+    /**
+     * @param { models.Record } itemRecord 
+     */
     tryGetTitleAndFavicon(itemRecord) {
-        const form = RecordUpsertForm($app, itemRecord);
+        const form = new RecordUpsertForm($app, itemRecord);
 
         try {
             // Try adding protocol
@@ -207,6 +229,11 @@ const funcs = {
         }
     },
 
+    /**
+     * @param {string} rawHtmlData 
+     * @param {string} originalProcessedUrl 
+     * @returns {string} The favicon url; returns empty string if not found
+     */
     tryGetFavicon(rawHtmlData, originalProcessedUrl) {
         const urlData = utils.getProtocolAndDomain(originalProcessedUrl);
 
