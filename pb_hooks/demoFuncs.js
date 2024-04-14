@@ -6,6 +6,11 @@ const recordUtils = require("./recordUtils.js");
 
 const demoFuncs = {
     resetDemoData() {
+        $app.logger().info(
+            "Resetting test account",
+            "datetime", new Date().toISOString()
+        );
+
         const demoUser = $app.dao().findAuthRecordByUsername(
             types.DbTables.USERS,
             consts.TEST_ACC_USERNAME
