@@ -33,7 +33,7 @@ onRecordBeforeRequestEmailChangeRequest((e) => {
     funcs.tryBlockAttemptToChangeTestAccEmail(e);
 }, types.DbTables.USERS);
 
-cronAdd("resetDemoData", "0 */6 * * *", () => {
+cronAdd("resetDemoData", "0 */2 * * *", () => {
     const demoFuncs = require(`${__hooks}/demoFuncs.js`);
 
     demoFuncs.resetDemoData();
