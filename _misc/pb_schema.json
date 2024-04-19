@@ -73,7 +73,7 @@
       "manageRule": null,
       "minPasswordLength": 8,
       "onlyEmailDomains": null,
-      "onlyVerified": false,
+      "onlyVerified": true,
       "requireEmail": true
     }
   },
