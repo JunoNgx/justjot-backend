@@ -26,7 +26,7 @@ const refetchFuncs = {
                 "itemId", itemId,
                 "content", itemRecord.get("content"),
             );
-            return c.json(204, itemRecord);
+            return c.json(400, { error: "Item is not a valid url" });
     
         } catch (err) {
             $app.logger().error(
@@ -34,6 +34,7 @@ const refetchFuncs = {
                 "itemId", itemId,
                 "error", err,
             );
+            return c.json(500, { error: err });
         }
     },
 };
