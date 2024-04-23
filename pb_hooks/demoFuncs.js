@@ -105,7 +105,7 @@ const demoFuncs = {
                 demoUserId,
                 personalCollId,
                 "Carian Knight build",
-                "Lvl: 150\nAstrologer\n\nVIG 55\nMIN 36\nEND 20\nSTR 10\nDEX 12\nINT 80\nFAI 7\nARC 9"
+                "Lvl: 150\nAstrologer\n\nVIG 60\nMIN 31\nEND 20\nSTR 10\nDEX 12\nINT 80\nFAI 7\nARC 9"
             );
 
             const workCollId = recordUtils.createCollection(
