@@ -143,7 +143,7 @@ const demoFuncs = {
 
     resetTrashBin(demoUserId) {
         try {
-            const trashBinRecord = $app.dao().findRecordsByFilter(
+            const trashBinRecord = $app.dao().findFirstRecordByFilter(
                 types.DbTables.TRASH_BINS,
                 `owner="${demoUserId}"`,
             );
