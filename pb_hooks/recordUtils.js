@@ -130,6 +130,33 @@ const recordUtils = {
             );
         }
     },
+
+    /**
+     * Create a trash bin record for the indicated userId
+     * @param {string} userId 
+     * @param {string} name 
+     * @param {string} slug 
+     */
+    createTrashBinRecord(userId, name = "Trash bin", slug="trash-bin") {
+        try {
+            const trashBinsCollection = $app.dao().findCollectionByNameOrId(types.DbTables.TRASH_BINS);
+            const trashBinRecord = new Record(trashBinsCollection);
+            const trashBinForm = new RecordUpsertForm($app, trashBinRecord);
+            trashBinForm.loadData({
+                owner: userId,
+                name,
+                slug,
+            });
+            trashBinForm.submit();
+
+        } catch (err) {
+            $app.logger().error(
+                "Error creating trash bin",
+                "userId", userId,
+                "error", err.toString(),
+            );
+        }
+    },
 };
 
 module.exports = recordUtils;
