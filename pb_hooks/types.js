@@ -3,7 +3,8 @@ const types = {
     DbTables: {
         USERS: "users",
         ITEMS: "items",
-        COLLECTIONS: "itemCollections"
+        COLLECTIONS: "itemCollections",
+        TRASH_BINS: "trashBins"
     },
     ItemTypes: {
         TEXT: "text",
