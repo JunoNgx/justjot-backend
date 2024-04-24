@@ -8,6 +8,18 @@ routerAdd("PATCH", "/refetch/:ownerId/:itemId", c => {
     refetchFuncs.handleRefetchRequest(c);
 }, $apis.requireAdminOrOwnerAuth("ownerId"));
 
+routerAdd("PATCH", "/items/trash/:ownerId/:itemId", c => {
+    const trashFuncs = require(`${__hooks}/trashFuncs.js`);
+
+    trashFuncs.handleTrashRequest(c);
+}, $apis.requireAdminOrOwnerAuth("ownerId"));
+
+routerAdd("PATCH", "/items/untrash/:ownerId/:itemId", c => {
+    const trashFuncs = require(`${__hooks}/trashFuncs.js`);
+
+    trashFuncs.handleUntrashRequest(c);
+}, $apis.requireAdminOrOwnerAuth("ownerId"));
+
 onRecordAfterCreateRequest((e) => {
     const funcs = require(`${__hooks}/funcs.js`);
 
