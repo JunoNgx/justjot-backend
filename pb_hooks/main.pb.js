@@ -25,6 +25,7 @@ onRecordAfterCreateRequest((e) => {
 
     funcs.sendUserEmailVerification(e);
     funcs.createInitialItemsForNewUser(e);
+    funcs.createTrashBinForNewUser(e);
 }, types.DbTables.USERS);
 
 // // Create starting data after a new user record is verified
