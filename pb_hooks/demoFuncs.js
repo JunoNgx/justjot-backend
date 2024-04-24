@@ -150,8 +150,8 @@ const demoFuncs = {
 
             const trashBinForm = new RecordUpsertForm($app, trashBinRecord);
             trashBinForm.loadData({
-                name: "Recycle bin",
-                slug: "recycle-bin",
+                name: "Gutter",
+                slug: "gutter",
             });
             trashBinForm.submit();
 
