@@ -54,11 +54,11 @@ migrate((db) => {
             }
         ],
         "indexes": [],
-        "listRule": null,
-        "viewRule": null,
-        "createRule": null,
-        "updateRule": null,
-        "deleteRule": null,
+        "listRule": "@request.auth.id = owner.id",
+        "viewRule": "@request.auth.id = owner.id",
+        "createRule": "@request.auth.id = owner.id",
+        "updateRule": "@request.auth.id = owner.id",
+        "deleteRule": "@request.auth.id = owner.id",
         "options": {}
     });
 
