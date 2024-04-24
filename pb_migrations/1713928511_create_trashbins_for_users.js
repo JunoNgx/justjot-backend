@@ -23,6 +23,13 @@ migrate((db) => {
             dao.saveRecord(newTrashBinRecord);
         }
     };
+
 }, (db) => {
-    // Intentionally does nothing
-})
+    const dao = new Dao(db);
+
+    const allTrashBins = dao.findRecordsByExpr("trashBins");
+
+    for (const trashBinRecord of allTrashBins) {
+        dao.deleteRecord(trashBinRecord);
+    }
+});
