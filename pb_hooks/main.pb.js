@@ -52,7 +52,7 @@ cronAdd("resetDemoData", "0 */2 * * *", () => {
     demoFuncs.resetDemoData();
 });
 
-cronAdd("resetDemoData", "0 0 * * *", () => {
+cronAdd("handleTrashedItems", "0 0 * * *", () => {
     const trashFuncs = require(`${__hooks}/trashFuncs.js`);
 
     trashFuncs.handleExpiredTrashItems();
