@@ -19,6 +19,16 @@ It should be noted that PocketBase's JS hooks are powered by [GoJa](https://gith
 
 With CRUD and authentication logic provided by PocketBase out of the box, the logic in this repository merely serves as extra fine-tuning and data processing to enrich the user data, such as item type classification, meta-data fetching, and management of test account.
 
+## Schemas and migrations
+
+Related [PocketBase documentation](https://pocketbase.io/docs/js-migrations/).
+
+Migration scripts are stored in the `pb_migrations` directory, and is auto-generated from changes made in the schema in the admin UI (as per default settings).
+
+The directory `_misc` stores the schema of the application at the release candidate milestone (in mid-April 2024). The migration scripts in this repository handles changes in the database schema from this point onwards.
+
+For development purposes, to undo the previous migrations (aka, "migrate down"), run `./pocketbase migrate down [n]` (without brackets), with `n` being the number of migrations.
+
 ## Branches
 
 An alternative version of the logics implemented in this repository can be found in the `go` branch (incomplete and not up-to-date), where they are implemented in native Go, with PocketBase as a Go framework, compiling to custom binary executable.
