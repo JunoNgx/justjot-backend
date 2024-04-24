@@ -27,7 +27,7 @@ const trashFuncs = {
             $app.logger().error(
                 "Error processing request to trash an item",
                 "itemId", itemId,
-                "error", err,
+                "error", err.toString(),
             );
             return c.json(500, { error: err });
         }
@@ -54,7 +54,7 @@ const trashFuncs = {
             $app.logger().error(
                 "Error processing request to untrash an item",
                 "itemId", itemId,
-                "error", err,
+                "error", err.toString(),
             );
             return c.json(500, { error: err });
         }
