@@ -4,8 +4,24 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
-    name: deploy
+  upload-migrations:
+    name: deploy migrations
+    runs-on: ubuntu-latest
+    steps:
+    - name: get codes
+      uses: actions/checkout@v4
+
+    - name: Upload FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./pb_migrations/
+        server-dir: justjot/pb_migrations/
+
+  upload-hooks:
+    name: deploy hooks
     runs-on: ubuntu-latest
     steps:
     - name: get codes
