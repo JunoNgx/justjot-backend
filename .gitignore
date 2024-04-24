@@ -21,7 +21,5 @@ build-errors.log
 
 pb_data
 pb_data/*
-pb_migrations
-pb_migrations/*
 pocketbase
 main
