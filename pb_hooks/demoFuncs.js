@@ -21,6 +21,7 @@ const demoFuncs = {
         const demoUserId = demoUser.getId();
         demoFuncs.deleteExistingData(demoUserId);
         demoFuncs.recreateData(demoUserId);
+        demoFuncs.resetTrashBin(demoUserId);
     },
 
     resetTestAccount(demoUser) {
@@ -137,6 +138,28 @@ const demoFuncs = {
                 "error", err.toString(),
             );
             console.log(err)
+        }
+    },
+
+    resetTrashBin(demoUserId) {
+        try {
+            const trashBinRecord = $app.dao().findRecordsByFilter(
+                types.DbTables.TRASH_BINS,
+                `owner="${demoUserId}"`,
+            );
+
+            const trashBinForm = new RecordUpsertForm($app, trashBinRecord);
+            trashBinForm.loadData({
+                name: "Recycle bin",
+                slug: "recycle-bin",
+            });
+            trashBinForm.submit();
+
+        } catch (err) {
+            $app.logger().error(
+                "Error resetting demo trash bin",
+                "error", err.toString(),
+            );
         }
     },
 };
