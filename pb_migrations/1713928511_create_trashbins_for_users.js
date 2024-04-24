@@ -13,7 +13,7 @@ migrate((db) => {
             // Try checking if user already has a trash bin
             dao.findFirstRecordByData("trashBins", "owner", user.id);
         } catch (e) {
-            // Likely has no trash, to create a new one
+            // Likely has no existing trash bin collection, to create a new one
             const newTrashBinRecord = new Record(trashBinsCollection, {
                 owner: user.id,
                 name: "Trash bin",
