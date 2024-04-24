@@ -74,6 +74,23 @@ const funcs = {
         }
     },
 
+    /**
+     * @param { core.RecordCreateEvent } e 
+     */
+    createTrashBinForNewUser(e) {
+        const userId = e.record.getId();
+
+        try {
+            recordUtils.createTrashBinRecord(userId);
+        } catch (err) {
+            $app.logger().error(
+                "Error creating trash bin for new user",
+                "userId", userId,
+                "error", err.toString(),
+            );
+        }
+    },
+
      /**
      * @param { core.RecordCreateEvent } e 
      */
