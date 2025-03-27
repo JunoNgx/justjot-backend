@@ -45,7 +45,13 @@ With PocketBase executable placed in this repository (which is already `gitignor
 
 ## Environment varible
 
-This application does not require any environment variables.
+This application does not require any environment variables for runtime.
+
+However, there are CI/CD pipelines via GitHub actions that would deploy the JS hooks into the PocketHost instance, whose secret variables are to be managed on GitHub:
+* FTP_PASSWORD
+* FTP_SERVER
+* FTP_USERNAME
+
 
 ## Schema
 
