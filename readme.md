@@ -35,7 +35,7 @@ An alternative version of the logics implemented in this repository can be found
 
 ## Running locally
 
-This repository requries a PocketBase executable. JustJot was first developed with PocketBase version `0.22.6`.
+This repository requries a PocketBase executable. JustJot was first developed with PocketBase version `0.22.7`.
 
 With PocketBase executable placed in this repository (which is already `gitignore`'ed):
 
