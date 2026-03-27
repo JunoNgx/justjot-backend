@@ -20,6 +20,12 @@ routerAdd("PATCH", "/items/untrash/:ownerId/:itemId", c => {
     trashFuncs.handleUntrashRequest(c);
 }, $apis.requireAdminOrOwnerAuth("ownerId"));
 
+routerAdd("GET", "/export/:ownerId", c => {
+    const exportFuncs = require(`${__hooks}/exportFuncs.js`);
+
+    exportFuncs.handleExportRequest(c);
+}, $apis.requireAdminOrOwnerAuth("ownerId"));
+
 onRecordAfterCreateRequest((e) => {
     const funcs = require(`${__hooks}/funcs.js`);
 
