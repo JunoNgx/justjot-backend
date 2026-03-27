@@ -15,6 +15,8 @@ This production deployment of JustJot is provided by [PocketHost](https://pocket
 
 It should be noted that PocketBase's JS hooks are powered by [GoJa](https://github.com/dop251/goja), a VM implementation of JavaScript in Go, which come with a lot of caveats.
 
+This deployment requires the PocketBase `v0.22.*`.
+
 ## Features
 
 With CRUD and authentication logic provided by PocketBase out of the box, the logic in this repository merely serves as extra fine-tuning and data processing to enrich the user data, such as item type classification, meta-data fetching, and management of test account.
